@@ -889,7 +889,7 @@ function init() {
   const canvas = document.getElementById('scene');
   renderer = new THREE.WebGLRenderer({ canvas, antialias: true, powerPreference: 'high-performance' });
   const isTouch = matchMedia('(pointer: coarse)').matches;
-  renderer.setPixelRatio(Math.min(window.devicePixelRatio, isTouch ? 1.5 : 2));
+  renderer.setPixelRatio(Math.min(window.devicePixelRatio, isTouch ? 1.0 : 1.5));
   renderer.setSize(window.innerWidth, window.innerHeight);
   renderer.outputEncoding = THREE.sRGBEncoding;
   renderer.toneMapping = THREE.ACESFilmicToneMapping;
@@ -1072,13 +1072,13 @@ function buildNebulae() {
                    mix(mix(hash(i+vec3(0,0,1)),hash(i+vec3(1,0,1)),f.x),
                        mix(hash(i+vec3(0,1,1)),hash(i+vec3(1,1,1)),f.x),f.y),f.z);
       }
-      float fbm(vec3 p){ float v=0.0, a=0.5; for(int i=0;i<6;i++){ v+=a*noise(p); p*=2.03; a*=0.5; } return v; }
+      float fbm(vec3 p){ float v=0.0, a=0.5; for(int i=0;i<4;i++){ v+=a*noise(p); p*=2.03; a*=0.5; } return v; }
       void main(){
         vec3 dir = normalize(vDir);
         vec3 p = dir*2.6;
-        // domain warp → filamentary structure
-        vec3 q = vec3(fbm(p+vec3(1.1,2.3,4.7)), fbm(p+vec3(5.2,1.3,2.1)), fbm(p+vec3(1.7,9.2,3.4)));
-        float n = fbm(p + 1.9*q + uTime*0.003);
+        // domain warp → filamentary structure (2 noise lookups instead of 3)
+        vec2 q = vec2(fbm(p+vec3(1.1,2.3,4.7)), fbm(p+vec3(5.2,1.3,2.1)));
+        float n = fbm(p + 1.9*vec3(q, q.x) + uTime*0.003);
         float d = smoothstep(0.48, 0.95, n);                 // more deep-black contrast
         // low-freq region select: distinct blue vs magenta nebula zones
         float region = fbm(p*0.32 + 12.0);
@@ -1420,7 +1420,7 @@ function buildBodies() {
     } else {
       const pal = GALAXY_PALETTES[ch.id] || GALAXY_PALETTES.origin;
       const Rh = ch.size * 1.05;
-      gx = makeGalaxy({ Rh, hot: pal.hot, mid: pal.mid, dark: pal.dark, ringColor: pal.ring, tiltX: 0.26 + (i % 3) * 0.16, density: 0.6 });
+      gx = makeGalaxy({ Rh, hot: pal.hot, mid: pal.mid, dark: pal.dark, ringColor: pal.ring, tiltX: 0.26 + (i % 3) * 0.16, density: 0.42 });
       group.add(gx.group); group.add(gx.photon);
       const pick = new THREE.Mesh(new THREE.SphereGeometry(Rh * 1.5, 12, 12), new THREE.MeshBasicMaterial({ visible: false }));
       group.add(pick);
