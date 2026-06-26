@@ -1,0 +1,607 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Ankush Meena — Product Designer</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+:root {
+  --ink: #0F0F0F;
+  --ink-soft: #2A2A2A;
+  --body: #3D3D3D;
+  --muted: #777;
+  --muted-lt: #999;
+  --border: #E5E5E5;
+  --border2: #D0D0D0;
+  --surface: #F8F8F8;
+  --accent: #1A1A8C;
+  --accent-lt: #F0F0FF;
+  --white: #FFFFFF;
+  --green: #1A6B3A;
+  --green-lt: #EBF7F0;
+}
+
+html { background: #EBEBEB; }
+
+body {
+  font-family: 'Inter', sans-serif;
+  color: var(--body);
+  font-size: 13px;
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* ── PAGE WRAPPER ── */
+.page {
+  max-width: 860px;
+  margin: 32px auto;
+  background: var(--white);
+  box-shadow: 0 2px 40px rgba(0,0,0,0.1);
+}
+
+/* ── HEADER ── */
+.resume-header {
+  padding: 44px 52px 36px;
+  border-bottom: 1px solid var(--border);
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 24px;
+  align-items: start;
+}
+.header-left h1 {
+  font-family: 'Instrument Serif', serif;
+  font-size: 42px;
+  font-weight: 400;
+  color: var(--ink);
+  letter-spacing: -0.02em;
+  line-height: 1;
+  margin-bottom: 8px;
+}
+.header-title {
+  font-size: 12px;
+  font-weight: 500;
+  color: var(--accent);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  margin-bottom: 14px;
+}
+.header-title span { color: var(--border2); margin: 0 6px; }
+.header-tagline {
+  font-size: 13px;
+  color: var(--body);
+  font-style: italic;
+  margin-bottom: 10px;
+  line-height: 1.5;
+  font-weight: 400;
+  max-width: 440px;
+}
+.avail-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: var(--green-lt);
+  border: 1px solid rgba(26,107,58,0.2);
+  border-radius: 20px;
+  padding: 4px 12px;
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--green);
+}
+.avail-dot {
+  width: 6px; height: 6px;
+  border-radius: 50%;
+  background: var(--green);
+  animation: pulse 2s infinite;
+}
+@keyframes pulse {
+  0%,100% { opacity: 1; }
+  50% { opacity: 0.4; }
+}
+.header-right {
+  text-align: right;
+  padding-top: 4px;
+}
+.contact-item {
+  font-size: 12px;
+  color: var(--muted);
+  margin-bottom: 5px;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 6px;
+}
+.contact-item a {
+  color: var(--accent);
+  text-decoration: none;
+  font-weight: 500;
+}
+.contact-item a:hover { text-decoration: underline; }
+.contact-icon { font-size: 11px; opacity: 0.6; }
+
+/* ── BODY LAYOUT ── */
+.resume-body {
+  display: grid;
+  grid-template-columns: 220px 1fr;
+}
+.sidebar {
+  padding: 32px 28px 40px;
+  border-right: 1px solid var(--border);
+  background: var(--surface);
+}
+.main-col {
+  padding: 32px 40px 40px;
+}
+
+/* ── SECTION LABEL ── */
+.sec-label {
+  font-size: 9px;
+  font-weight: 700;
+  color: var(--accent);
+  text-transform: uppercase;
+  letter-spacing: 0.14em;
+  margin-bottom: 14px;
+  padding-bottom: 8px;
+  border-bottom: 1px solid var(--border);
+}
+.sec-block { margin-bottom: 28px; }
+.sec-block:last-child { margin-bottom: 0; }
+
+/* ── SKILLS ── */
+.skill-group { margin-bottom: 16px; }
+.skill-group:last-child { margin-bottom: 0; }
+.skill-group-label {
+  font-size: 10px;
+  font-weight: 600;
+  color: var(--ink-soft);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  margin-bottom: 7px;
+}
+.skill-tags { display: flex; flex-wrap: wrap; gap: 4px; }
+.skill-tag {
+  font-size: 10px;
+  padding: 3px 8px;
+  background: var(--white);
+  border: 1px solid var(--border2);
+  border-radius: 4px;
+  color: var(--body);
+  font-weight: 400;
+}
+.skill-tag.primary {
+  background: var(--accent-lt);
+  border-color: rgba(26,26,140,0.15);
+  color: var(--accent);
+  font-weight: 500;
+}
+
+/* ── TOOLS GRID ── */
+.tools-grid { display: flex; flex-wrap: wrap; gap: 5px; }
+.tool-badge {
+  font-size: 11px;
+  font-weight: 500;
+  color: var(--ink-soft);
+  padding: 4px 9px;
+  background: var(--white);
+  border: 1px solid var(--border2);
+  border-radius: 5px;
+}
+
+/* ── EDUCATION ── */
+.edu-item { margin-bottom: 14px; }
+.edu-item:last-child { margin-bottom: 0; }
+.edu-degree {
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--ink);
+  line-height: 1.4;
+  margin-bottom: 2px;
+}
+.edu-spec {
+  font-size: 11px;
+  color: var(--muted);
+  margin-bottom: 2px;
+}
+.edu-school {
+  font-size: 11px;
+  color: var(--accent);
+  font-weight: 500;
+  margin-bottom: 1px;
+}
+.edu-year {
+  font-size: 10px;
+  color: var(--muted-lt);
+}
+.award-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  margin-top: 6px;
+  background: #FFF8E7;
+  border: 1px solid rgba(196,140,0,0.2);
+  border-radius: 5px;
+  padding: 3px 8px;
+  font-size: 10px;
+  color: #8A6000;
+  font-weight: 500;
+}
+
+/* ── CERTIFICATIONS ── */
+.cert-item {
+  margin-bottom: 10px;
+  padding-bottom: 10px;
+  border-bottom: 1px solid var(--border);
+}
+.cert-item:last-child { margin-bottom: 0; padding-bottom: 0; border-bottom: none; }
+.cert-name { font-size: 11px; font-weight: 600; color: var(--ink); margin-bottom: 1px; }
+.cert-issuer { font-size: 10px; color: var(--accent); font-weight: 500; }
+
+/* ── PROFILE ── */
+/* ── EXPERIENCE ── */
+.exp-item { margin-bottom: 28px; }
+.exp-item:last-child { margin-bottom: 0; }
+.exp-header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 4px; }
+.exp-title { font-size: 14px; font-weight: 700; color: var(--ink); }
+.exp-date { font-size: 11px; color: var(--muted); font-weight: 400; white-space: nowrap; margin-left: 12px; flex-shrink: 0; }
+.exp-company {
+  font-size: 11px;
+  color: var(--accent);
+  font-weight: 600;
+  margin-bottom: 10px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+.exp-type {
+  font-size: 10px;
+  color: var(--muted);
+  font-weight: 400;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 3px;
+  padding: 1px 6px;
+}
+.exp-bullets { padding-left: 0; list-style: none; display: flex; flex-direction: column; gap: 5px; }
+.exp-bullets li {
+  font-size: 12px;
+  color: var(--body);
+  line-height: 1.65;
+  padding-left: 14px;
+  position: relative;
+}
+.exp-bullets li::before {
+  content: '—';
+  position: absolute;
+  left: 0;
+  color: var(--border2);
+  font-size: 11px;
+}
+.exp-bullets li strong { color: var(--ink); font-weight: 600; }
+.exp-divider { height: 1px; background: var(--border); margin: 28px 0; }
+
+/* ── PROJECTS SECTION ── */
+.projects-header { margin-bottom: 16px; }
+.project-row {
+  display: flex;
+  align-items: flex-start;
+  gap: 14px;
+  padding: 12px 0;
+  border-bottom: 1px solid var(--border);
+}
+.project-row:last-child { border-bottom: none; }
+.project-num {
+  font-family: 'Instrument Serif', serif;
+  font-size: 22px;
+  color: var(--border2);
+  line-height: 1;
+  flex-shrink: 0;
+  width: 24px;
+}
+.project-content { flex: 1; }
+.project-name { font-size: 12px; font-weight: 700; color: var(--ink); margin-bottom: 2px; }
+.project-tags { display: flex; gap: 5px; flex-wrap: wrap; margin-bottom: 3px; }
+.project-tag {
+  font-size: 9px;
+  padding: 2px 7px;
+  border-radius: 3px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+}
+.pt-cap { background: var(--accent-lt); color: var(--accent); }
+.pt-free { background: var(--green-lt); color: var(--green); }
+.pt-ind { background: var(--surface); color: var(--muted); border: 1px solid var(--border2); }
+.project-desc { font-size: 11px; color: var(--muted); line-height: 1.55; }
+
+/* ── PRINT STYLES ── */
+@media print {
+  html { background: white; }
+  .page { margin: 0; box-shadow: none; max-width: 100%; }
+  body { font-size: 11px; }
+  .resume-header { padding: 32px 40px 28px; }
+  .sidebar { padding: 24px 20px 32px; }
+  .main-col { padding: 24px 32px 32px; }
+}
+
+/* ── SCREEN ONLY ── */
+@media screen {
+  .print-hint {
+    text-align: center;
+    padding: 12px;
+    font-size: 11px;
+    color: var(--muted);
+    background: #EBEBEB;
+  }
+  .print-hint a { color: var(--accent); text-decoration: none; }
+}
+
+/* ── ATMOS responsive add-on (mobile only; desktop/print unchanged) ── */
+@media screen and (max-width: 640px) {
+  .page { margin: 16px auto; }
+  .resume-header { grid-template-columns: 1fr; padding: 28px 22px 24px; }
+  .header-left h1 { font-size: 34px; }
+  .header-tagline { max-width: none; }
+  .header-right { text-align: left; padding-top: 12px; }
+  .contact-item { justify-content: flex-start; }
+  .resume-body { grid-template-columns: 1fr; }
+  .sidebar { border-right: none; border-bottom: 1px solid var(--border); padding: 24px 22px 28px; }
+  .main-col { padding: 28px 22px 32px; }
+  .exp-header { flex-direction: column; gap: 2px; }
+  .exp-date { margin-left: 0; }
+}
+</style>
+</head>
+<body>
+
+<div class="print-hint">
+  <a href="javascript:window.print()">⬇ Print / Save as PDF</a> · Cmd+P on Mac · Ctrl+P on Windows
+</div>
+
+<div class="page">
+
+  <!-- HEADER -->
+  <div class="resume-header">
+    <div class="header-left">
+      <h1>Ankush Meena</h1>
+      <div class="header-tagline">From oil fields to delivery rooms — I design systems that work when it matters most.</div>
+      <div class="header-title">
+        Product Designer
+        <span>·</span>4+ Years Experience
+        <span>·</span>UX/UI
+        <span>·</span>Design Systems
+      </div>
+      <div class="avail-pill">
+        <div class="avail-dot"></div>
+        Immediately available · Full-time, contract & remote
+      </div>
+    </div>
+    <div class="header-right">
+      <div class="contact-item"><span class="contact-icon">📍</span> Jaipur, Rajasthan, India</div>
+      <div class="contact-item"><span class="contact-icon">✉</span> <a href="mailto:ankushmeena0779@gmail.com">ankushmeena0779@gmail.com</a></div>
+      <div class="contact-item"><span class="contact-icon">📱</span> +91 96020 93380</div>
+      <div class="contact-item"><span class="contact-icon">🌐</span> <a href="https://atmos-portfolio-mqnw.vercel.app" target="_blank">atmos-portfolio-mqnw.vercel.app</a></div>
+      <div class="contact-item"><span class="contact-icon">🔗</span> <a href="https://linkedin.com/in/ankushmeena" target="_blank">LinkedIn</a></div>
+    </div>
+  </div>
+
+  <!-- BODY -->
+  <div class="resume-body">
+
+    <!-- SIDEBAR -->
+    <div class="sidebar">
+
+      <!-- Skills -->
+      <div class="sec-block">
+        <div class="sec-label">Design Skills</div>
+        <div class="skill-group">
+          <div class="skill-tags">
+            <span class="skill-tag primary">Product Design</span>
+            <span class="skill-tag primary">UX/UI</span>
+            <span class="skill-tag primary">Interaction Design</span>
+            <span class="skill-tag primary">Design Systems</span>
+            <span class="skill-tag">Visual Identity</span>
+            <span class="skill-tag">Wireframing</span>
+            <span class="skill-tag">Prototyping</span>
+            <span class="skill-tag">Responsive Design</span>
+            <span class="skill-tag">Accessibility</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Tools -->
+      <div class="sec-block">
+        <div class="sec-label">Tools</div>
+        <div class="tools-grid">
+          <span class="tool-badge">Figma</span>
+          <span class="tool-badge">Framer</span>
+          <span class="tool-badge">Sketch</span>
+          <span class="tool-badge">Webflow</span>
+          <span class="tool-badge">Adobe CC</span>
+          <span class="tool-badge">Miro</span>
+          <span class="tool-badge">Notion</span>
+          <span class="tool-badge">Google Analytics</span>
+        </div>
+      </div>
+
+      <!-- Soft Skills -->
+      <div class="sec-block">
+        <div class="sec-label">Methods</div>
+        <div class="skill-tags">
+          <span class="skill-tag">Usability Testing</span>
+          <span class="skill-tag">Stakeholder Management</span>
+          <span class="skill-tag">Developer Handoff</span>
+          <span class="skill-tag">Design QA</span>
+          <span class="skill-tag">AI-Assisted Design</span>
+        </div>
+      </div>
+
+      <!-- Education -->
+      <div class="sec-block">
+        <div class="sec-label">Education</div>
+        <div class="edu-item">
+          <div class="edu-degree">Professional Diploma in Communication Design</div>
+          <div class="edu-spec">Interaction Design Specialisation</div>
+          <div class="edu-school">Pearl Academy</div>
+          <div class="edu-year">2017 – 2021</div>
+          <div class="award-badge">🏆 Pearl Excellence Award</div>
+        </div>
+      </div>
+
+      <!-- Certifications -->
+      <div class="sec-block">
+        <div class="sec-label">Certifications</div>
+        <div class="cert-item">
+          <div class="cert-name">Google UX Design Professional</div>
+          <div class="cert-issuer">Coursera</div>
+        </div>
+        <div class="cert-item">
+          <div class="cert-name">UX Design Fundamentals</div>
+          <div class="cert-issuer">California Institute of the Arts</div>
+        </div>
+        <div class="cert-item">
+          <div class="cert-name">AI for Everyone</div>
+          <div class="cert-issuer">DeepLearning.AI</div>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- MAIN COLUMN -->
+    <div class="main-col">
+
+      <!-- Profile -->
+      <!-- Experience -->
+      <div class="sec-label">Experience</div>
+
+      <!-- Freelance -->
+      <div class="exp-item">
+        <div class="exp-header">
+          <div class="exp-title">Freelance Product Designer</div>
+          <div class="exp-date">Jun 2023 – Present</div>
+        </div>
+        <div class="exp-company">
+          Independent Practice
+          <span class="exp-type">Freelance · Remote</span>
+        </div>
+        <ul class="exp-bullets">
+          <li>Designed <strong>MOMents</strong> — an AI-powered pregnancy wellness app for a seed-stage startup, delivering 6 hi-fi screens and a complete design system <strong>across 10 weeks</strong> by leading end-to-end UX from user research through prototype handoff; startup is currently seeking seed funding (Dec 2025 – Feb 2026).</li>
+          <li>Delivered <strong>3 additional case studies</strong> spanning web design, interaction design, and Framer development by maintaining solo ownership of research, wireframes, hi-fi design, and developer handoff on every project.</li>
+        </ul>
+      </div>
+
+      <div class="exp-divider"></div>
+
+      <!-- Capgemini -->
+      <div class="exp-item">
+        <div class="exp-header">
+          <div class="exp-title">UX Designer</div>
+          <div class="exp-date">Jul 2021 – Jun 2023</div>
+        </div>
+        <div class="exp-company">
+          Capgemini
+          <span class="exp-type">Full-time · Jaipur</span>
+        </div>
+        <ul class="exp-bullets">
+          <li>Improved signup conversion by <strong>37.5%</strong> and reduced average onboarding time significantly by redesigning the core user flow with clearer hierarchy, inline validation, and a streamlined field structure.</li>
+          <li>Delivered a <strong>government-grade design system</strong> for ADAFSA (UAE) — 20 components, RTL Arabic support, and full Figma handoff — by establishing design tokens, component governance, and developer documentation from scratch as the sole Capgemini designer embedded with the client team.</li>
+          <li>Accelerated Baker Hughes field engineer workflows by designing a <strong>5-screen asset management platform</strong> with contextual validation and annotated developer specs, reducing design-to-build interpretation errors across the product team.</li>
+          <li>Reduced patient data loss and consultation errors across <strong>multiple hospital departments</strong> by leading UX for an internal medical transcription app (MediScribe) — designing a real-time doctor interface and a 9-screen patient mobile app that automated visit documentation end-to-end.</li>
+          <li>Eliminated duplicate internal tooling across Sales, Operations, and Engineering by leading <strong>cross-functional alignment</strong> sessions that consolidated workflows into a single platform, reducing operational overhead across teams.</li>
+          <li>Maintained consistent design quality across <strong>multiple concurrent product tracks</strong> by owning design system governance, usability testing, design QA, and developer handoff simultaneously throughout a 2-year engagement.</li>
+        </ul>
+      </div>
+
+      <div class="exp-divider"></div>
+
+      <!-- Micromax -->
+      <div class="exp-item">
+        <div class="exp-header">
+          <div class="exp-title">Visual Designer</div>
+          <div class="exp-date">Feb 2020 – Jan 2021</div>
+        </div>
+        <div class="exp-company">
+          Micromax
+          <span class="exp-type">Live Industry Project · Pearl Academy</span>
+        </div>
+        <ul class="exp-bullets">
+          <li>Improved usability and visual clarity of <strong>smartwatch and earphone companion apps</strong> across Android and iOS by redesigning the UI system with consistent interaction patterns and updated visual language.</li>
+          <li>Validated hardware–software integration across <strong>multiple device variants</strong> by testing earphone compatibility and EQ visualiser behaviour, surfacing and resolving edge cases before production release.</li>
+        </ul>
+      </div>
+
+      <div class="exp-divider"></div>
+
+      <!-- Projects -->
+      <div class="sec-label">Selected Projects</div>
+
+      <div class="project-row">
+        <div class="project-num">1</div>
+        <div class="project-content">
+          <div class="project-name">Baker Hughes — Asset Management UX</div>
+          <div class="project-tags">
+            <span class="project-tag pt-cap">Capgemini</span>
+            <span class="project-tag pt-ind">Enterprise B2B</span>
+          </div>
+          <div class="project-desc">End-to-end UX for field engineer asset management platform — 5 interactive screens, annotated Figma handoff, validation system design.</div>
+        </div>
+      </div>
+
+      <div class="project-row">
+        <div class="project-num">2</div>
+        <div class="project-content">
+          <div class="project-name">ADAFSA — Government Design System</div>
+          <div class="project-tags">
+            <span class="project-tag pt-cap">Capgemini</span>
+            <span class="project-tag pt-ind">UAE Government</span>
+          </div>
+          <div class="project-desc">Built TAMM platform design system from scratch — 20 components, RTL Arabic support, color tokens, type scale, page templates.</div>
+        </div>
+      </div>
+
+      <div class="project-row">
+        <div class="project-num">3</div>
+        <div class="project-content">
+          <div class="project-name">MediScribe — Medical Transcription App</div>
+          <div class="project-tags">
+            <span class="project-tag pt-cap">Capgemini</span>
+            <span class="project-tag pt-ind">Healthcare</span>
+          </div>
+          <div class="project-desc">Real-time AI consultation transcription — doctor clinical interface + 9-screen patient mobile app with plain-language visit summaries.</div>
+        </div>
+      </div>
+
+      <div class="project-row">
+        <div class="project-num">4</div>
+        <div class="project-content">
+          <div class="project-name">MOMents — Pregnancy Wellness App</div>
+          <div class="project-tags">
+            <span class="project-tag pt-free">Freelance</span>
+            <span class="project-tag pt-ind">Seed Stage</span>
+          </div>
+          <div class="project-desc">AI-powered wellness companion — 6 hi-fi screens, full design system, user research, competitive analysis. Startup seeking funding.</div>
+        </div>
+      </div>
+
+      <div class="project-row">
+        <div class="project-num">5–7</div>
+        <div class="project-content">
+          <div class="project-name">One For All · Parkify · Sahaj</div>
+          <div class="project-tags">
+            <span class="project-tag pt-ind">Independent</span>
+            <span class="project-tag pt-ind">Web & Mobile</span>
+          </div>
+          <div class="project-desc">Case studies in web design, UX research, interaction design and Framer development — full portfolio at atmos-portfolio-mqnw.vercel.app</div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<div class="print-hint" style="margin-top:0">
+  Ankush Meena · ankushmeena0779@gmail.com · atmos-portfolio-mqnw.vercel.app
+</div>
+
+</body>
+</html>
