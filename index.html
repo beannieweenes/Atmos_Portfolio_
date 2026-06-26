@@ -484,11 +484,9 @@ const CHAPTERS = [
    Engine state
    ---------------------------------------------------------------------------- */
 let renderer, scene, camera, composer, bloom, clock, sun;
-let resState;   // adaptive resolution scaler (see updateResolution)
 let starLayers = [], nebulae = [], bodies = [];
 let pathCurve = null;
 let warpField = null, radialPass = null;
-let perfTier = 'high';   // 'low' | 'mid' | 'high' — set in init from device capability
 let dust = null, dotTex = null, bank = 0;
 let blackHole = null;
 let clouds = [], cloudTex = null;
@@ -967,26 +965,9 @@ function init() {
   const canvas = document.getElementById('scene');
   renderer = new THREE.WebGLRenderer({ canvas, antialias: true, powerPreference: 'high-performance' });
   const isTouch = matchMedia('(pointer: coarse)').matches;
-  // Adaptive resolution: boot at a safe pixel ratio, then let updateResolution()
-  // climb toward the device's native DPR when there's frame headroom (crisper on
-  // 4K/Retina) and fall back when frames get heavy (smooth on weak GPUs).
-  resState = {
-    isTouch,
-    min: isTouch ? 0.75 : 1.0,
-    max: Math.min(window.devicePixelRatio || 1, 2.0),
-    dpr: Math.min(window.devicePixelRatio || 1, isTouch ? 1.0 : 1.5),
-    budgetFps: isTouch ? 45 : 58,
-    workEMA: 8, evalAt: 0, cooldownUntil: 0,
-  };
-  // Device tier bounds how hard the scaler tries and gates the heaviest pass.
-  perfTier = detectPerfTier();
-  if (perfTier === 'low') {
-    resState.max = Math.min(window.devicePixelRatio || 1, 1.0); resState.min = 0.6; resState.budgetFps = 30;
-    resState.dpr = Math.min(resState.dpr, resState.max);
-  } else if (perfTier === 'mid') {
-    resState.max = Math.min(window.devicePixelRatio || 1, 1.5); resState.min = 0.7; resState.budgetFps = 50;
-  }
-  renderer.setPixelRatio(resState.dpr);
+  // Fixed pixel ratio — full quality, no adaptive downscaling. Mobile renders at
+  // up to 1.5, desktop up to 2 (the device's native DPR caps it below that).
+  renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, isTouch ? 1.5 : 2));
   renderer.setSize(window.innerWidth, window.innerHeight);
   renderer.outputEncoding = THREE.sRGBEncoding;
   renderer.toneMapping = THREE.ACESFilmicToneMapping;
@@ -1014,10 +995,8 @@ function init() {
   composer.addPass(new THREE.RenderPass(scene, camera));
   bloom = new THREE.UnrealBloomPass(new THREE.Vector2(window.innerWidth * 0.5, window.innerHeight * 0.5), 0.66, 0.7, 0.08);
   composer.addPass(bloom);
-  if (perfTier !== 'low') {            // skip the extra full-screen pass on weak GPUs
-    radialPass = new THREE.ShaderPass(RadialBlurShader); // last pass → renders to screen
-    composer.addPass(radialPass);
-  }
+  radialPass = new THREE.ShaderPass(RadialBlurShader); // last pass → renders to screen
+  composer.addPass(radialPass);
 
   bindEvents();
   placeCameraOnRails();
@@ -1695,11 +1674,6 @@ function onResize() {
   camera.aspect = w / h;
   camera.fov = fovForAspect(camera.aspect);
   camera.updateProjectionMatrix();
-  if (resState) {
-    resState.max = Math.min(window.devicePixelRatio || 1, 2.0);   // re-check native DPR (monitor/zoom change)
-    resState.dpr = Math.min(resState.dpr, resState.max);
-    renderer.setPixelRatio(resState.dpr);
-  }
   renderer.setSize(w, h); composer.setSize(w, h);
   bloom.setSize(Math.floor(w * 0.5), Math.floor(h * 0.5));
   markActivity();
@@ -2223,7 +2197,6 @@ function animate() {
   const minStep = idle ? 1 / 30 : 1 / 60;
   if (frameAcc < minStep) return;
   const dt = Math.min(frameAcc, 0.05); frameAcc = 0;
-  const workT0 = performance.now();
 
   if (mode === 'rails' || mode === 'transition') updateRails(dt);
   if (mode === 'chapter') updateChapter(dt);
@@ -2239,48 +2212,6 @@ function animate() {
   if (dust) dust.rotation.y += dt * 0.006;   // slow ambient drift of the particle field
   if (blackHole && mode !== 'chapter') updateBlackHole(dt);
   composer.render();
-  updateResolution(workT0);
-}
-
-// Self-correcting resolution scaler. Tracks an EMA of per-frame work time and,
-// at most ~once per second, nudges the pixel ratio down when frames run heavy or
-// up when there's comfortable headroom — staying within [min, native-DPR cap].
-function applyResolution() {
-  renderer.setPixelRatio(resState.dpr);
-  const w = innerWidth, h = innerHeight;
-  renderer.setSize(w, h); composer.setSize(w, h);
-  bloom.setSize(Math.floor(w * 0.5), Math.floor(h * 0.5));
-}
-// Coarse device-capability tier. Software renderer → low; otherwise weigh cores,
-// memory, and touch. Bounds the scaler and gates the radial-blur pass.
-function detectPerfTier() {
-  try {
-    const gl = renderer && renderer.getContext();
-    const ext = gl && gl.getExtension('WEBGL_debug_renderer_info');
-    const r = ext ? String(gl.getParameter(ext.UNMASKED_RENDERER_WEBGL) || '').toLowerCase() : '';
-    if (/swiftshader|llvmpipe|software|basic render|microsoft basic/.test(r)) return 'low';
-  } catch (e) {}
-  const cores = navigator.hardwareConcurrency || 4;
-  const mem = navigator.deviceMemory || 4;   // GB (Chromium only); assume 4 elsewhere
-  const touch = matchMedia('(pointer: coarse)').matches;
-  if (mem <= 3 || cores <= 2) return 'low';
-  if (touch ? (mem <= 4 || cores <= 6) : (cores <= 4)) return 'mid';
-  return 'high';
-}
-
-function updateResolution(workT0) {
-  const s = resState; if (!s) return;
-  const now = performance.now();
-  s.workEMA += ((now - workT0) - s.workEMA) * 0.1;
-  if (now < s.evalAt) return;
-  s.evalAt = now + 900;
-  if (now < s.cooldownUntil) return;
-  const budget = 1000 / (s.budgetFps || 58);   // headroom-aware target (set by device tier)
-  if (s.workEMA > budget * 0.9 && s.dpr > s.min) {
-    s.dpr = Math.max(s.min, +(s.dpr - 0.2).toFixed(2)); applyResolution(); s.cooldownUntil = now + 1200;
-  } else if (s.workEMA < budget * 0.5 && s.dpr < s.max) {
-    s.dpr = Math.min(s.max, +(s.dpr + 0.2).toFixed(2)); applyResolution(); s.cooldownUntil = now + 1500;
-  }
 }
 
 /* =====================  Intro / boot  ====================================== */
