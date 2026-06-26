@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Ankush Meena — Transmission // Vesper Station</title>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;700&family=Share+Tech+Mono&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+:root {
+  --bg: #05060e;
+  --bg2: #0a0d1c;
+  --ink: #eaf2ff;
+  --muted: #8b9bc4;
+  --faint: rgba(160,180,225,.18);
+  --cyan: #5fe6ff;
+  --mag: #ff5fd2;
+  --amber: #ffcf6b;
+  --font: 'Space Grotesk', system-ui, sans-serif;
+  --mono: 'Share Tech Mono', monospace;
+}
+html { background: var(--bg); }
+body {
+  font-family: var(--font);
+  color: var(--ink);
+  background:
+    radial-gradient(120% 90% at 50% -10%, rgba(95,230,255,.10), transparent 60%),
+    radial-gradient(120% 90% at 90% 110%, rgba(255,95,210,.10), transparent 55%),
+    var(--bg);
+  line-height: 1.6;
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+  animation: flicker 6s infinite;
+}
+@keyframes flicker {
+  0%,100% { opacity: 1; }
+  47% { opacity: 1; }
+  48% { opacity: .82; }
+  49% { opacity: 1; }
+  74% { opacity: .94; }
+  75% { opacity: 1; }
+}
+
+/* ── VHS overlays (scanlines + grain + vignette) ── */
+.fx { position: fixed; inset: 0; pointer-events: none; z-index: 9999; }
+.fx.scan {
+  background: repeating-linear-gradient(0deg, rgba(0,0,0,0) 0, rgba(0,0,0,0) 2px, rgba(0,0,0,.22) 3px, rgba(0,0,0,0) 4px);
+  mix-blend-mode: multiply; opacity: .5;
+}
+.fx.sweep {
+  background: linear-gradient(180deg, transparent, rgba(95,230,255,.06) 50%, transparent);
+  height: 40%; animation: sweep 7s linear infinite; opacity: .6;
+}
+@keyframes sweep { 0% { transform: translateY(-120%); } 100% { transform: translateY(320%); } }
+.fx.vig { box-shadow: inset 0 0 240px 40px rgba(0,0,0,.75); }
+.fx.grain {
+  opacity: .05;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  animation: grain .4s steps(2) infinite;
+}
+@keyframes grain { 0%{transform:translate(0,0)} 50%{transform:translate(-4%,3%)} 100%{transform:translate(3%,-2%)} }
+
+/* ── shell ── */
+.wrap { max-width: 1020px; margin: 0 auto; padding: 0 28px 90px; position: relative; z-index: 1; }
+
+/* ── transmission bar ── */
+.tbar {
+  display: flex; justify-content: space-between; align-items: center;
+  font-family: var(--mono); font-size: 11px; letter-spacing: .18em; text-transform: uppercase;
+  color: var(--muted); padding: 18px 0 14px; border-bottom: 1px solid var(--faint);
+}
+.rec { display: flex; align-items: center; gap: 8px; color: var(--mag); }
+.rec .dot { width: 9px; height: 9px; border-radius: 50%; background: var(--mag); box-shadow: 0 0 10px var(--mag); animation: blink 1.1s steps(2) infinite; }
+@keyframes blink { 50% { opacity: .15; } }
+
+/* ── hero ── */
+.hero { padding: 64px 0 40px; }
+.ey { font-family: var(--mono); font-size: 12px; letter-spacing: .42em; text-transform: uppercase; color: var(--cyan); margin-bottom: 18px; }
+.glitch {
+  font-size: clamp(40px, 9vw, 96px); font-weight: 700; letter-spacing: .02em; line-height: .98;
+  position: relative; color: var(--ink); text-shadow: 0 0 28px rgba(95,230,255,.25);
+}
+.glitch::before, .glitch::after {
+  content: attr(data-text); position: absolute; inset: 0; clip-path: inset(0 0 0 0);
+}
+.glitch::before { color: var(--cyan); transform: translate(-2px,0); mix-blend-mode: screen; animation: gl1 4s infinite steps(2); }
+.glitch::after  { color: var(--mag);  transform: translate(2px,0);  mix-blend-mode: screen; animation: gl2 5s infinite steps(2); }
+@keyframes gl1 { 0%,92%,100%{clip-path:inset(0 0 0 0); transform:translate(-2px,0)} 93%{clip-path:inset(20% 0 55% 0); transform:translate(-7px,-2px)} 96%{clip-path:inset(70% 0 8% 0); transform:translate(4px,1px)} }
+@keyframes gl2 { 0%,90%,100%{clip-path:inset(0 0 0 0); transform:translate(2px,0)} 91%{clip-path:inset(60% 0 20% 0); transform:translate(7px,2px)} 95%{clip-path:inset(10% 0 70% 0); transform:translate(-5px,-1px)} }
+.role { font-family: var(--mono); font-size: 13px; letter-spacing: .2em; text-transform: uppercase; color: var(--muted); margin-top: 20px; }
+.role b { color: var(--ink); font-weight: 400; }
+
+/* ── holographic panel ── */
+.holo {
+  position: relative; border: 1px solid rgba(95,230,255,.22); border-radius: 14px;
+  background: linear-gradient(180deg, rgba(95,230,255,.05), rgba(255,95,210,.04));
+  backdrop-filter: blur(3px);
+  box-shadow: 0 0 0 1px rgba(0,0,0,.4) inset, 0 24px 60px rgba(0,0,0,.5);
+}
+.holo::before {
+  content: ''; position: absolute; inset: 0; border-radius: 14px; pointer-events: none;
+  background: repeating-linear-gradient(0deg, transparent 0 2px, rgba(95,230,255,.045) 2px 3px);
+}
+.corner { position: absolute; width: 14px; height: 14px; border: 2px solid var(--cyan); opacity: .7; }
+.corner.tl { top: -1px; left: -1px; border-right: 0; border-bottom: 0; }
+.corner.tr { top: -1px; right: -1px; border-left: 0; border-bottom: 0; }
+.corner.bl { bottom: -1px; left: -1px; border-right: 0; border-top: 0; }
+.corner.br { bottom: -1px; right: -1px; border-left: 0; border-top: 0; }
+
+.sec-tag { font-family: var(--mono); font-size: 11px; letter-spacing: .26em; text-transform: uppercase; color: var(--cyan); margin: 56px 0 18px; display: flex; align-items: center; gap: 12px; }
+.sec-tag::after { content: ''; flex: 1; height: 1px; background: var(--faint); }
+
+/* ── bio ── */
+.bio { padding: 34px 38px; }
+.bio p { font-size: 16px; color: #cdd8f2; margin-bottom: 16px; max-width: 70ch; }
+.bio p:last-child { margin-bottom: 0; }
+.bio p strong { color: var(--ink); font-weight: 600; }
+.bio .lead { font-size: 18px; color: var(--ink); }
+
+/* ── photo gallery ── */
+.gal { display: grid; grid-template-columns: repeat(6, 1fr); gap: 14px; grid-auto-rows: 160px; }
+.frame {
+  position: relative; overflow: hidden; border-radius: 10px; border: 1px solid var(--faint);
+  background: linear-gradient(135deg, #0c1326, #161a33); filter: grayscale(1) contrast(1.05);
+  transition: filter .5s, transform .5s, box-shadow .5s; cursor: crosshair;
+}
+.frame img { width: 100%; height: 100%; object-fit: cover; display: block; opacity: .9; }
+.frame::after { /* scanlines on photos */
+  content: ''; position: absolute; inset: 0; pointer-events: none;
+  background: repeating-linear-gradient(0deg, transparent 0 2px, rgba(0,0,0,.25) 2px 3px);
+  mix-blend-mode: multiply; opacity: .55;
+}
+.frame .trk { position: absolute; left: 8px; bottom: 7px; font-family: var(--mono); font-size: 9px; letter-spacing: .15em; color: var(--cyan); text-shadow: 0 0 6px rgba(0,0,0,.9); z-index: 2; opacity: .85; }
+.frame:hover { filter: grayscale(0) contrast(1.05) saturate(1.1); transform: translateY(-4px); box-shadow: 0 0 0 1px var(--cyan), -4px 0 0 rgba(255,95,210,.4), 4px 0 0 rgba(95,230,255,.4), 0 18px 40px rgba(0,0,0,.6); z-index: 3; }
+/* fallback when an image is missing */
+.frame.noimg img { display: none; }
+.frame.noimg::before { content: 'NO SIGNAL'; position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; font-family: var(--mono); font-size: 11px; letter-spacing: .2em; color: var(--muted); background: repeating-linear-gradient(45deg, #0c1326 0 10px, #10162b 10px 20px); }
+/* sizing — matched to each photo's orientation */
+.frame.feat  { grid-column: span 2; grid-row: span 2; }  /* square B&W feature */
+.frame.wide4 { grid-column: span 4; }                    /* landscape (gaming / bike) */
+.frame.half  { grid-column: span 3; grid-row: span 2; }  /* portrait / square */
+
+/* ── audio log ── */
+.audio-wrap { padding: 22px; }
+.audio-head { display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 10px; margin-bottom: 16px; font-family: var(--mono); font-size: 11px; letter-spacing: .2em; text-transform: uppercase; color: var(--muted); }
+.audio-head .live { color: var(--amber); display: flex; align-items: center; gap: 8px; }
+.audio-head .live .dot { width: 8px; height: 8px; border-radius: 50%; background: var(--amber); box-shadow: 0 0 10px var(--amber); animation: blink 1.4s steps(2) infinite; }
+.spotify-frame { position: relative; border-radius: 12px; overflow: hidden; box-shadow: 0 0 28px rgba(95,230,255,.12); }
+.spotify-frame iframe { display: block; width: 100%; border: 0; border-radius: 12px; }
+.spotify-frame::after { content: ''; position: absolute; inset: 0; pointer-events: none; background: repeating-linear-gradient(0deg, transparent 0 2px, rgba(95,230,255,.05) 2px 3px); border-radius: 12px; }
+.shuffle-note { font-family: var(--mono); font-size: 10px; letter-spacing: .14em; color: var(--muted); margin-top: 10px; text-transform: uppercase; }
+
+/* ── links ── */
+.links { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 22px; }
+.chip {
+  display: inline-flex; align-items: center; gap: 9px; text-decoration: none;
+  font-family: var(--mono); font-size: 12px; letter-spacing: .12em; text-transform: uppercase;
+  color: var(--ink); border: 1px solid var(--faint); border-radius: 100px; padding: 11px 18px;
+  background: rgba(255,255,255,.02); transition: border-color .25s, background .25s, color .25s, transform .2s; cursor: pointer;
+}
+.chip:hover { border-color: var(--cyan); color: var(--cyan); transform: translateY(-2px); background: rgba(95,230,255,.06); }
+.chip .ic { opacity: .8; }
+.chip.copied { border-color: var(--amber); color: var(--amber); }
+.chip.work { border-color: rgba(255,207,107,.45); color: var(--amber); }
+.chip.work .pulse { width: 7px; height: 7px; border-radius: 50%; background: var(--amber); box-shadow: 0 0 10px var(--amber); animation: blink 1.6s steps(2) infinite; }
+
+/* ── footer ── */
+.foot { margin-top: 64px; padding-top: 18px; border-top: 1px solid var(--faint); display: flex; justify-content: space-between; flex-wrap: wrap; gap: 10px; font-family: var(--mono); font-size: 10px; letter-spacing: .18em; text-transform: uppercase; color: var(--muted); }
+
+/* ── responsive ── */
+@media (max-width: 720px) {
+  .wrap { padding: 0 18px 70px; }
+  .hero { padding: 44px 0 30px; }
+  .bio { padding: 26px 20px; }
+  .bio p { font-size: 15px; } .bio .lead { font-size: 16px; }
+  .gal { grid-template-columns: repeat(2, 1fr); grid-auto-rows: 150px; gap: 10px; }
+  .frame.feat  { grid-column: span 2; grid-row: span 2; }  /* full-width feature */
+  .frame.wide4 { grid-column: span 2; }                    /* full-width landscape */
+  .frame.half  { grid-column: span 1; grid-row: span 2; }  /* portrait pair */
+  .tbar { font-size: 9.5px; }
+}
+</style>
+</head>
+<body>
+  <div class="fx grain"></div>
+  <div class="fx scan"></div>
+  <div class="fx sweep"></div>
+  <div class="fx vig"></div>
+
+  <div class="wrap">
+
+    <!-- transmission bar -->
+    <div class="tbar">
+      <span>TRANSMISSION // VESPER STATION</span>
+      <span class="rec"><span class="dot"></span> REC <span id="tc">00:00:00</span></span>
+    </div>
+
+    <!-- hero -->
+    <div class="hero">
+      <div class="ey">// Incoming signal — about the pilot</div>
+      <div class="glitch" data-text="ANKUSH MEENA">ANKUSH MEENA</div>
+      <div class="role"><b>Product Designer</b> · Jaipur, IN · UX/UI · Design Systems</div>
+    </div>
+
+    <!-- bio -->
+    <div class="sec-tag">01 — Dossier</div>
+    <div class="holo bio">
+      <span class="corner tl"></span><span class="corner tr"></span><span class="corner bl"></span><span class="corner br"></span>
+      <p class="lead">Product Designer based in Jaipur. Four years across enterprise, government, and healthcare — Capgemini trained, freelancing now.</p>
+      <p>I care most about the parts of design other people skip: the error states, the edge cases, the handoff spec that keeps the build honest. The work should hold up when something goes wrong, not just when everything goes right.</p>
+      <p>The space theme on this portfolio isn't accidental. I've always been drawn to the idea that the best interfaces are like good spacecraft design — everything stripped back to what's essential, nothing wasted, and it still has to work flawlessly when the stakes are highest. That's the standard I hold my work to.</p>
+      <p>When I'm not designing I'm gaming, making playlists, or trying to figure out music production. I've recently added <strong>"learning to use a DAW"</strong> to the list of things I'm bad at but refuse to stop doing.</p>
+    </div>
+
+    <!-- gallery -->
+    <div class="sec-tag">02 — Visual log</div>
+    <div class="gal" id="gal">
+      <div class="frame feat"><img src="/images/me-1.jpg" alt="" onerror="this.parentNode.classList.add('noimg')"><span class="trk">CH-01 ▸ VESPER</span></div>
+      <div class="frame wide4"><img src="/images/me-2.jpg" alt="" onerror="this.parentNode.classList.add('noimg')"><span class="trk">CH-02 ▸ VALORANT</span></div>
+      <div class="frame wide4"><img src="/images/me-3.jpg" alt="" onerror="this.parentNode.classList.add('noimg')"><span class="trk">CH-03 ▸ ROOFTOP</span></div>
+      <div class="frame half"><img src="/images/me-4.jpg" alt="" onerror="this.parentNode.classList.add('noimg')"><span class="trk">CH-04 ▸ AFTER DARK</span></div>
+      <div class="frame half"><img src="/images/me-5.jpg" alt="" onerror="this.parentNode.classList.add('noimg')"><span class="trk">CH-05 ▸ AFTERHOURS</span></div>
+    </div>
+
+    <!-- audio log -->
+    <div class="sec-tag">03 — Audio log</div>
+    <div class="holo audio-wrap">
+      <span class="corner tl"></span><span class="corner tr"></span><span class="corner bl"></span><span class="corner br"></span>
+      <div class="audio-head">
+        <span>◉ Now transmitting — the pilot's rotation</span>
+        <span class="live"><span class="dot"></span> Live feed</span>
+      </div>
+      <div class="spotify-frame">
+        <div id="spotify-embed"></div>
+      </div>
+      <div class="shuffle-note">▸ Auto-plays on entry · hit the shuffle icon for the full random rotation</div>
+    </div>
+
+    <!-- links -->
+    <div class="sec-tag">04 — Channels</div>
+    <div class="links">
+      <a class="chip" href="https://open.spotify.com/user/lg2u2r9mgzihiq2gs4ujpi2vn" target="_blank" rel="noopener"><span class="ic">♫</span> Spotify profile</a>
+      <span class="chip" id="valorant" title="Click to copy"><span class="ic">⌖</span> Valorant — Beanfornication#candy</span>
+      <a class="chip" href="mailto:ankushmeena0779@gmail.com"><span class="ic">✉</span> Email</a>
+      <a class="chip" href="https://linkedin.com/in/ankushmeena" target="_blank" rel="noopener"><span class="ic">🔗</span> LinkedIn</a>
+      <span class="chip work"><span class="pulse"></span> Open to the right opportunity</span>
+    </div>
+
+    <div class="foot">
+      <span>VESPER STATION · ANKUSH MEENA · <span id="yr"></span></span>
+      <span>SIGNAL STRENGTH ▰▰▰▰▰ // END OF TRANSMISSION</span>
+    </div>
+
+  </div>
+
+<script>
+  // live REC timecode
+  (function(){
+    const el = document.getElementById('tc'); let s = 0;
+    const pad = n => String(n).padStart(2,'0');
+    setInterval(() => { s++; el.textContent = pad((s/3600|0)%100) + ':' + pad((s/60|0)%60) + ':' + pad(s%60); }, 1000);
+  })();
+  document.getElementById('yr').textContent = new Date().getFullYear();
+
+  // Spotify IFrame API — embed the playlist and attempt autoplay on entry.
+  // Ducks the portfolio's background score (in the parent window) only while the
+  // playlist is actually playing, so there's never dead silence if autoplay is blocked.
+  window.onSpotifyIframeApiReady = (IFrameAPI) => {
+    const el = document.getElementById('spotify-embed'); if (!el) return;
+    IFrameAPI.createController(el, {
+      uri: 'spotify:playlist:3EETuNTVDPS7eN9zw4vGtd', width: '100%', height: 352, theme: 'dark'
+    }, (controller) => {
+      const tryPlay = () => { try { controller.play(); } catch (e) {} };
+      controller.addListener('ready', () => { tryPlay(); setTimeout(tryPlay, 500); });
+      controller.addListener('playback_update', (e) => {
+        const playing = !!(e && e.data && e.data.isPaused === false);
+        try { if (window.parent && window.parent.__atmosDuck) window.parent.__atmosDuck(playing); } catch (err) {}
+      });
+    });
+  };
+  // click-to-copy Valorant ID
+  (function(){
+    const v = document.getElementById('valorant'); if(!v) return;
+    v.addEventListener('click', () => {
+      const id = 'Beanfornication#candy';
+      const done = () => { const t = v.innerHTML; v.classList.add('copied'); v.innerHTML = '<span class="ic">✓</span> Copied — Beanfornication#candy'; setTimeout(()=>{ v.classList.remove('copied'); v.innerHTML = t; }, 1600); };
+      if (navigator.clipboard) navigator.clipboard.writeText(id).then(done).catch(done); else done();
+    });
+  })();
+</script>
+<script src="https://open.spotify.com/embed/iframe-api/v1" async></script>
+</body>
+</html>
