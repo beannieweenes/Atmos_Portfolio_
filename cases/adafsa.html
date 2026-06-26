@@ -343,6 +343,30 @@ h1, h2, h3, h4 { color: var(--heading); line-height: 1.2; }
 .prose + .prose { margin-top: 16px; }
 .divider { height: 1px; background: var(--border); margin: 48px 0; }
 </style>
+<style id="atmos-mobile-fixes">
+/* ATMOS responsive add-on (mobile only; desktop unchanged). */
+@media (max-width: 640px) {
+  .container { padding: 0 20px; }
+  .section { padding: 56px 0; }
+  /* top nav: keep links on one swipeable row */
+  .nav-inner { gap: 12px; }
+  .nav-links { gap: 18px; flex: 1 1 0; min-width: 0; overflow-x: auto; -webkit-overflow-scrolling: touch; scrollbar-width: none; }
+  .nav-links::-webkit-scrollbar { display: none; }
+  .nav-links a { white-space: nowrap; }
+  /* collapse multi-column content grids to one column */
+  .role-banner, .problem-grid, .mini-body, .ba-grid,
+  .contribution-items, .reflection-grid { grid-template-columns: 1fr !important; }
+  .role-banner { padding: 28px 24px; gap: 22px; }
+  .contribution { padding: 36px 24px; }
+  .mini-sidebar { border-left: none; border-top: 1px solid var(--border); }
+  /* hero meta row → stacked */
+  .hero-meta { flex-direction: column; width: auto; }
+  .hero-meta-item { border-right: none; border-bottom: 1px solid var(--border); }
+  .hero-meta-item:last-child { border-bottom: none; }
+  /* keep media fluid */
+  img, svg, video, iframe { max-width: 100%; height: auto; }
+}
+</style>
 </head>
 <body>
 

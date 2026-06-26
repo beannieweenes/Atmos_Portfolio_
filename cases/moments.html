@@ -442,6 +442,26 @@ body { font-family: 'Poppins', sans-serif; background: var(--surface); color: va
 .process-name { font-size: 12px; font-weight: 700; color: var(--ink); margin-bottom: 4px; }
 .process-items { font-size: 11px; color: var(--muted); line-height: 1.6; }
 </style>
+<style id="atmos-mobile-fixes">
+/* ATMOS responsive add-on (mobile only; desktop unchanged). Device mockups untouched. */
+@media (max-width: 640px) {
+  html, body { overflow-x: hidden; }   /* clip decorative hero blobs; no sideways page scroll */
+  .hero-meta { flex-direction: column; width: auto; }
+  .process-row { flex-direction: column; gap: 20px; }   /* stack the step timeline */
+  .process-step::after { display: none; }               /* drop the → arrows when stacked */
+  .top-nav { padding: 0 12px; }
+  .nav-brand { display: none; }   /* keep the mark; free the row for links */
+  .nav-links { flex: 1 1 0; min-width: 0; margin-left: 8px; overflow-x: auto; -webkit-overflow-scrolling: touch; scrollbar-width: none; }
+  .nav-links::-webkit-scrollbar { display: none; }
+  .nav-btn { flex-shrink: 0; }
+  .cs-body { padding: 48px 20px 64px; }
+  /* collapse page-level content grids (not the phone/wireframe mockups) */
+  .cs-insights, .comp-grid, .persona-grid { grid-template-columns: 1fr !important; }
+  /* wide comparison table → horizontal scroll instead of page overflow */
+  .comp-table { display: block; overflow-x: auto; -webkit-overflow-scrolling: touch; }
+  img, svg, video, iframe { max-width: 100%; height: auto; }
+}
+</style>
 </head>
 <body>
 

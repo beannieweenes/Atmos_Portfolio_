@@ -381,11 +381,15 @@ body { font-family: 'Sora', sans-serif; background: #F0F4F6; color: var(--body-t
 /* ATMOS responsive add-on: keep the in-page top nav usable on phones.
    The logo stays put; the link row becomes a constrained, swipeable strip. */
 @media (max-width: 640px) {
+  html, body { overflow-x: hidden; }   /* no sideways page scroll; clip mockup excess */
   .top-nav { padding: 0 12px; }
   .nav-brand { display: none; }   /* keep the logo mark; free the row for the links */
   .nav-links { flex: 1 1 0; min-width: 0; margin-left: 8px; overflow-x: auto; -webkit-overflow-scrolling: touch; scrollbar-width: none; }
   .nav-links::-webkit-scrollbar { display: none; }
   .nav-btn { flex-shrink: 0; }
+  .cs-page { padding: 40px 20px 64px; }
+  .cs-insights { grid-template-columns: 1fr !important; }   /* case-study content → one column */
+  img, svg, video, iframe { max-width: 100%; height: auto; }
 }
 </style>
 </head>
