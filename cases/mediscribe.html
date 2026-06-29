@@ -378,6 +378,11 @@ body { font-family: 'Sora', sans-serif; background: #F0F4F6; color: var(--body-t
 .scr-cap button { font-size: 11px; color: var(--teal); border: 1px solid rgba(10,123,116,0.25); background: white; border-radius: 3px; padding: 3px 9px; cursor: pointer; font-family: 'Sora',sans-serif; }
 </style>
 <style id="atmos-mobile-fixes">
+/* Keep the written case study to a readable, centered column at EVERY width.
+   (Forces the constraint even if something stretches the prose full-width.) */
+#sc-casestudy .cs-page { max-width: 820px !important; margin-left: auto !important; margin-right: auto !important; }
+#sc-casestudy .cs-block, #sc-casestudy .cs-cover { max-width: 100%; }
+
 /* ATMOS responsive add-on: keep the in-page top nav usable on phones.
    The logo stays put; the link row becomes a constrained, swipeable strip. */
 @media (max-width: 640px) {
@@ -390,6 +395,13 @@ body { font-family: 'Sora', sans-serif; background: #F0F4F6; color: var(--body-t
   .cs-page { padding: 40px 20px 64px; }
   .cs-insights { grid-template-columns: 1fr !important; }   /* case-study content → one column */
   img, svg, video, iframe { max-width: 100%; height: auto; }
+  /* App-demo screens are desktop layouts — keep their proportions but make each
+     one swipeable instead of squished/clipped (the writeup screen stays prose). */
+  #sc-consult, #sc-summary, #sc-history, #sc-prescription, #sc-patient {
+    overflow-x: auto; -webkit-overflow-scrolling: touch;
+  }
+  #sc-consult .app, #sc-summary .app, #sc-history .app,
+  #sc-prescription .app, #sc-patient .app { min-width: 880px; }
 }
 </style>
 </head>
@@ -2249,6 +2261,9 @@ function go(name) {
   if (map[name] !== undefined) document.querySelectorAll('.nav-btn')[map[name]].classList.add('active');
   window.scrollTo(0,0);
 }
+// On phones, lead with the written case study (moments-style). The interactive
+// app demo stays one tap away in the nav. Desktop default is unchanged.
+try { if (window.matchMedia && matchMedia('(max-width: 640px)').matches) go('casestudy'); } catch (e) {}
 </script>
 </body>
 </html>

@@ -812,6 +812,9 @@ body { font-family: 'Inter', sans-serif; background: #F0F0F0; color: var(--body)
 .spi { pointer-events: none; transform-origin: top left; }
 </style>
 <style id="atmos-mobile-fixes">
+/* Keep the written case study to a readable, centered column at EVERY width. */
+#s-casestudy .cs2-page { max-width: 780px !important; margin-left: auto !important; margin-right: auto !important; }
+
 /* ATMOS responsive add-on (mobile only; desktop unchanged). Product-UI mockups left intact. */
 @media (max-width: 640px) {
   html, body { overflow-x: hidden; }   /* no sideways page scroll; clip decorative excess */
@@ -825,6 +828,13 @@ body { font-family: 'Inter', sans-serif; background: #F0F0F0; color: var(--body)
   /* collapse case-study CONTENT grids (product mockups stay multi-column) */
   .role-banner, .prob-grid, .ba-grid, .refl-grid, .contrib-items, .cs2-insights { grid-template-columns: 1fr !important; }
   img, svg, video, iframe { max-width: 100%; height: auto; }
+  /* App-demo sections are desktop layouts — keep proportions but make them swipeable
+     (mobile leads with the writeup; these stay one tap away in the nav). */
+  #s-dashboard, #s-inventory, #s-register, #s-maintenance, #s-success {
+    overflow-x: auto; -webkit-overflow-scrolling: touch;
+  }
+  #s-dashboard .app-shell, #s-inventory .app-shell, #s-register .app-shell,
+  #s-maintenance .app-shell, #s-success .app-shell { min-width: 900px; }
 }
 </style>
 
@@ -1298,6 +1308,9 @@ function show(name) {
   if (map[name] !== undefined) document.querySelectorAll('.nav-btn')[map[name]].classList.add('active');
   window.scrollTo(0,0);
 }
+// On phones, lead with the written case study (moments-style); the app demo stays
+// one tap away in the nav. Desktop default is unchanged.
+try { if (window.matchMedia && matchMedia('(max-width: 640px)').matches) show('casestudy'); } catch (e) {}
 </script>
 </body>
 </html>
