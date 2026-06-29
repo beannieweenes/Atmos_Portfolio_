@@ -389,6 +389,15 @@ body { font-family: 'Sora', sans-serif; background: #F0F4F6; color: var(--body-t
   padding-left: 28px; padding-right: 28px; box-sizing: border-box;
 }
 
+/* "Open the live screen" buttons in the Solution section. */
+.cs-screens-links { display: flex; flex-wrap: wrap; gap: 9px; margin-top: 22px; }
+.cs-screens-links button {
+  font-family: 'Sora', sans-serif; font-size: 12.5px; font-weight: 600;
+  color: #065954; background: #E6F4F3; border: 1px solid rgba(10,123,116,0.28);
+  border-radius: 7px; padding: 10px 15px; cursor: pointer; transition: background .2s, border-color .2s;
+}
+.cs-screens-links button:hover { background: #d3ecea; border-color: rgba(10,123,116,0.5); }
+
 /* ATMOS responsive add-on: keep the in-page top nav usable on phones.
    The logo stays put; the link row becomes a constrained, swipeable strip. */
 @media (max-width: 640px) {
@@ -1838,417 +1847,96 @@ function showPhone(idx) {
   </div>
 
   <div class="cs-block">
-    <div class="cs-sl">Where it started</div>
-    <div class="cs-h2">Someone noticed doctors were spending half the appointment looking at a screen</div>
-    <p class="cs-p">This came out of Capgemini's corporate health clinic setup. The observation was pretty simple — go sit in a GP's room for a morning and watch what actually happens. The doctor asks a question, the patient answers, and instead of the doctor listening and thinking, they're typing. Then they're looking up what the patient was prescribed six months ago. Then they're searching for a drug interaction. Then they're trying to remember what the patient said three minutes ago while they were doing all of that.</p>
-    <p class="cs-p">By the time a ten-minute appointment is over, a good chunk of it has gone into documentation, not medicine. And the patient walks out with a prescription they half-understand and no real memory of what was said.</p>
-    <p class="cs-p">The idea behind this project was: what if the app just listened? Record the conversation, transcribe it in real time, pull out the clinical information — diagnoses, prescriptions, tests — and build the record automatically. The doctor talks to the patient. The app handles the paperwork.</p>
-    <p class="cs-p">I came in to design both sides of it — the interface the doctor uses during and after the consultation, and the app the patient opens on their phone afterwards.</p>
+    <div class="cs-sl">01 — The brief</div>
+    <div class="cs-h2">Give doctors back the half of the appointment they lose to a keyboard</div>
+    <p class="cs-p">Capgemini ran an internal health clinic, and the brief came out of one observation: in a ten-minute consultation, the doctor spends half of it typing instead of listening. My job was to fix that — for the doctor, and for the patient on the other side of the desk.</p>
   </div>
 
   <div class="cs-div"></div>
 
   <div class="cs-block">
-    <div class="cs-sl">The actual problem</div>
-    <div class="cs-h2">Same data, completely different people trying to use it</div>
-    <p class="cs-p">The tricky part of this project was that there were really two separate design problems sitting on top of the same technical thing.</p>
-    <p class="cs-p">For the doctor, the biggest risk was actually the app itself. If you put a screen in front of a doctor during a consultation, they'll look at it. They can't help it. So the doctor-facing interface had to earn its place in the room without pulling attention away from the person sitting across the table. Everything needed to be readable at a glance. Nothing should require clicking around to find.</p>
-    <p class="cs-p">For the patient, the problem was different. Most people leave a doctor's appointment having taken in maybe half of what was said. They forget the dose. They can't remember if the blood test was for the thyroid thing or something else. They lose the printed prescription somewhere between the clinic and the pharmacy. The app needed to give them back that information in a form they could actually use — not the clinical record, but a plain-language version of it. And their medication reminders needed to set themselves, because nobody is going to sit down and configure a reminder schedule after a GP appointment.</p>
-    <p class="cs-p">There was a third problem too. When you visit a specialist who's never met you before, you become the only source of your own history. You have to remember what you were prescribed, when, by whom, and for what. Most people get bits of it wrong. With this app, a cardiologist could open a patient's record and see every GP visit, every diagnosis, every prescription — all there, without the patient having to narrate it from memory.</p>
+    <div class="cs-sl">02 — Discovery</div>
+    <div class="cs-h2">I spent a morning watching real consultations before I drew anything</div>
+    <p class="cs-p">The pattern repeated every visit. The doctor asks a question, the patient answers, and instead of thinking the doctor is typing — then hunting for a past prescription, then checking a drug interaction, then trying to recall what was said two minutes ago while doing all of it.</p>
+    <p class="cs-p">By the end, a chunk of the appointment has gone to paperwork, and the patient walks out remembering maybe half of what happened. That handed me three problems to design for, not one.</p>
   </div>
 
   <div class="cs-div"></div>
 
   <div class="cs-block">
-    <div class="cs-sl">Screen 1 — Live Consultation</div>
-    <div class="cs-h2">The screen that had to stay invisible</div>
-    <p class="cs-p">This one took the most iterations. The first version had too much going on — the transcript was front and centre, the AI suggestions had buttons on them, there were controls for pausing and rewinding. It looked comprehensive. It also looked like something a doctor would minimise immediately and never open again.</p>
-    <p class="cs-p">We stripped it back. The recording indicator is just a small red dot and a timer. One button: end the session. The transcript scrolls on its own. Anything clinical — drug names, test mentions, diagnoses — gets highlighted automatically so the doctor can scan without reading. The patient's allergy flags and active meds sit in a dark sidebar panel that's always there but never demands attention. The AI panel below it surfaces relevant notes based on what's being said in the room — not as actions to take, just as context.</p>
-    <p class="cs-p">The rule we kept coming back to was: if the doctor has to touch this screen during the consultation, something has gone wrong.</p>
+    <div class="cs-sl">03 — Who it was for</div>
+    <div class="cs-h2">Same data, three very different people</div>
+    <p class="cs-p"><strong>The doctor.</strong> Put a screen in front of them mid-consultation and they'll look at it — they can't help it. The interface had to earn its place in the room without pulling their eyes off the patient.</p>
+    <p class="cs-p"><strong>The patient.</strong> They leave having absorbed half of what was said, lose the paper script, forget the dose. They needed the visit handed back in plain language, with medication reminders that set themselves — because nobody configures a reminder schedule after a GP appointment.</p>
+    <p class="cs-p"><strong>The next specialist.</strong> They meet the patient cold and rebuild the history from memory — usually getting bits of it wrong. They needed the whole record in front of them, without a phone call to the GP's office.</p>
+  </div>
 
-    <div class="scr">
-<div class="scr-ttl">MediScribe — Live Consultation · Dr. S. Krishnan + Aisha Mehta</div></div>
-      <div class="scr-pv" style="height:400px">
-        <div class="scr-inner" style="width:1280px;transform:scale(0.555);margin-bottom:-318px">
-          <div style="display:flex;height:720px;background:#F5F8FA;font-family:'Sora',sans-serif">
-            <div style="width:224px;background:#0F1923;flex-shrink:0;padding:18px 0">
-              <div style="padding:0 18px 5px;font-size:9px;font-weight:600;color:rgba(255,255,255,0.28);text-transform:uppercase;letter-spacing:0.1em">Today</div>
-              <div style="padding:8px 18px;font-size:12px;color:white;background:rgba(10,123,116,0.2);border-left:2px solid #0D9B92;display:flex;align-items:center;gap:8px"><span style="width:7px;height:7px;border-radius:50%;background:#E53E3E;flex-shrink:0;display:inline-block"></span>Live Consultation</div>
-              <div style="padding:8px 18px;font-size:12px;color:rgba(255,255,255,0.45)">📄 Visit Summary</div>
-              <div style="padding:14px 18px 5px;font-size:9px;font-weight:600;color:rgba(255,255,255,0.28);text-transform:uppercase;letter-spacing:0.1em;margin-top:6px">Patients</div>
-              <div style="padding:8px 18px;font-size:12px;color:rgba(255,255,255,0.45)">🧑‍⚕️ Patient History</div>
-              <div style="padding:8px 18px;font-size:12px;color:rgba(255,255,255,0.45)">💊 Prescriptions</div>
-              <div style="padding:14px 18px 5px;font-size:9px;font-weight:600;color:rgba(255,255,255,0.28);text-transform:uppercase;letter-spacing:0.1em;margin-top:6px">Tools</div>
-              <div style="padding:8px 18px;font-size:12px;color:rgba(255,255,255,0.45);display:flex;justify-content:space-between;align-items:center">📅 Appointments <span style="background:#0A7B74;color:white;font-size:9px;padding:1px 5px;border-radius:8px">4</span></div>
-              <div style="padding:8px 18px;font-size:12px;color:rgba(255,255,255,0.45);display:flex;justify-content:space-between;align-items:center">🔔 Alerts <span style="background:#D64545;color:white;font-size:9px;padding:1px 5px;border-radius:8px">2</span></div>
-            </div>
-            <div style="flex:1;padding:22px 26px;overflow:hidden">
-              <!-- Recording banner -->
-              <div style="background:linear-gradient(135deg,#0A2E2C,#0F3D3A);border-radius:10px;padding:14px 18px;margin-bottom:16px;display:flex;align-items:center;gap:14px;border:1px solid rgba(10,123,116,0.3)">
-                <div style="width:9px;height:9px;border-radius:50%;background:#E53E3E;flex-shrink:0"></div>
-                <div style="flex:1"><div style="font-size:10px;font-weight:700;color:#0D9B92;text-transform:uppercase;letter-spacing:0.08em;margin-bottom:2px">Recording in progress</div><div style="font-size:11px;color:rgba(255,255,255,0.55)">Patient: Aisha Mehta · DOB: 14 Mar 1988 · Visit #7</div></div>
-                <div style="font-family:'JetBrains Mono',monospace;font-size:18px;font-weight:500;color:white">08:43</div>
-                <div style="background:#D64545;color:white;border-radius:6px;padding:6px 12px;font-size:11px;font-weight:700">■ End & Summarise</div>
-              </div>
-              <div style="display:grid;grid-template-columns:1fr 300px;gap:16px">
-                <div>
-                  <!-- Transcript -->
-                  <div style="background:white;border-radius:10px;border:1px solid #DDE6EA;overflow:hidden">
-                    <div style="padding:11px 16px;border-bottom:1px solid #DDE6EA;display:flex;justify-content:space-between;align-items:center;background:#F5F8FA">
-                      <div style="font-size:12px;font-weight:700;color:#0F1923">Live Transcript</div>
-                      <div style="display:flex;gap:8px"><span style="background:#E6F4F3;color:#0A7B74;font-size:9px;font-weight:700;padding:2px 7px;border-radius:4px">🎙 Listening</span></div>
-                    </div>
-                    <div style="padding:16px;display:flex;flex-direction:column;gap:12px">
-                      <div style="display:flex;gap:10px"><div style="width:24px;height:24px;border-radius:50%;background:#0A7B74;display:flex;align-items:center;justify-content:center;font-size:9px;font-weight:700;color:white;flex-shrink:0;margin-top:2px">DR</div><div><div style="font-size:9px;font-weight:700;color:#7A8D9C;text-transform:uppercase;letter-spacing:0.06em;margin-bottom:2px">Dr. Krishnan · 08:01</div><div style="font-size:12px;color:#3A4A56;line-height:1.55">Good morning Aisha, how have you been since your last visit? Any changes with the <span style="background:#C5E8E6;color:#065954;border-radius:2px;padding:0 3px">blood pressure</span>?</div></div></div>
-                      <div style="display:flex;gap:10px"><div style="width:24px;height:24px;border-radius:50%;background:#243140;display:flex;align-items:center;justify-content:center;font-size:9px;font-weight:700;color:white;flex-shrink:0;margin-top:2px">AM</div><div><div style="font-size:9px;font-weight:700;color:#7A8D9C;text-transform:uppercase;letter-spacing:0.06em;margin-bottom:2px">Patient · 08:02</div><div style="font-size:12px;color:#3A4A56;line-height:1.55">Better. I've been taking the <span style="background:#C5E8E6;color:#065954;border-radius:2px;padding:0 3px">Amlodipine</span> as prescribed. But I've been getting headaches in the morning, maybe the past two weeks.</div></div></div>
-                      <div style="display:flex;gap:10px"><div style="width:24px;height:24px;border-radius:50%;background:#0A7B74;display:flex;align-items:center;justify-content:center;font-size:9px;font-weight:700;color:white;flex-shrink:0;margin-top:2px">DR</div><div><div style="font-size:9px;font-weight:700;color:#7A8D9C;text-transform:uppercase;letter-spacing:0.06em;margin-bottom:2px">Dr. Krishnan · 08:04</div><div style="font-size:12px;color:#3A4A56;line-height:1.55">Morning headaches can be associated with <span style="background:#C5E8E6;color:#065954;border-radius:2px;padding:0 3px">BP fluctuations</span> overnight. Any nausea or visual disturbances?</div></div></div>
-                      <div style="display:flex;gap:10px"><div style="width:24px;height:24px;border-radius:50%;background:#243140;display:flex;align-items:center;justify-content:center;font-size:9px;font-weight:700;color:white;flex-shrink:0;margin-top:2px">AM</div><div><div style="font-size:9px;font-weight:700;color:#7A8D9C;text-transform:uppercase;letter-spacing:0.06em;margin-bottom:2px">Patient · 08:05</div><div style="font-size:12px;color:#3A4A56;line-height:1.55">No visual issues, but some nausea. Also been quite <span style="background:#C5E8E6;color:#065954;border-radius:2px;padding:0 3px">fatigued</span>, especially afternoons.</div></div></div>
-                      <div style="display:flex;gap:10px"><div style="width:24px;height:24px;border-radius:50%;background:#0A7B74;display:flex;align-items:center;justify-content:center;font-size:9px;font-weight:700;color:white;flex-shrink:0;margin-top:2px">DR</div><div><div style="font-size:9px;font-weight:700;color:#7A8D9C;text-transform:uppercase;letter-spacing:0.06em;margin-bottom:2px">Dr. Krishnan · 08:07</div><div style="font-size:12px;color:#3A4A56;line-height:1.55">Fatigue could be Amlodipine-related. I'd also want to rule out <span style="background:#C5E8E6;color:#065954;border-radius:2px;padding:0 3px">thyroid issues</span> given your family history. Let's order a <span style="background:#C5E8E6;color:#065954;border-radius:2px;padding:0 3px">TSH panel</span> today.</div></div></div>
-                    </div>
-                  </div>
-                </div>
-                <!-- Right panel -->
-                <div style="display:flex;flex-direction:column;gap:12px">
-                  <div style="background:#0F1923;border-radius:10px;padding:14px">
-                    <div style="font-size:9px;font-weight:700;color:rgba(255,255,255,0.28);text-transform:uppercase;letter-spacing:0.1em;margin-bottom:8px">Patient Context</div>
-                    <div style="font-size:14px;font-weight:700;color:white;margin-bottom:5px">Aisha Mehta</div>
-                    <div style="display:flex;gap:6px;flex-wrap:wrap;margin-bottom:9px"><span style="font-size:9px;padding:2px 7px;background:rgba(255,255,255,0.1);border-radius:3px;color:rgba(255,255,255,0.62)">36F</span><span style="font-size:9px;padding:2px 7px;background:rgba(255,255,255,0.1);border-radius:3px;color:rgba(255,255,255,0.62)">DOB: 14 Mar 1988</span></div>
-                    <div style="display:flex;flex-direction:column;gap:5px">
-                      <div style="font-size:10px;padding:5px 8px;border-radius:4px;background:rgba(214,69,69,0.18);color:#FF9090;display:flex;align-items:center;gap:5px">⚠ Penicillin allergy (severe)</div>
-                      <div style="font-size:10px;padding:5px 8px;border-radius:4px;background:rgba(196,122,26,0.18);color:#FFC36B;display:flex;align-items:center;gap:5px">⚡ Hypertension — Amlodipine 5mg</div>
-                      <div style="font-size:10px;padding:5px 8px;border-radius:4px;background:rgba(196,122,26,0.18);color:#FFC36B;display:flex;align-items:center;gap:5px">🧬 Family Hx: Thyroid (maternal)</div>
-                    </div>
-                  </div>
-                  <div style="background:#E6F4F3;border:1px solid #C5E8E6;border-radius:10px;overflow:hidden">
-                    <div style="padding:9px 13px;background:#065954;display:flex;align-items:center;gap:7px">
-                      <span style="font-size:13px">✦</span>
-                      <div style="font-size:10px;font-weight:700;color:rgba(255,255,255,0.82)">AI Suggestions</div>
-                      <div style="font-size:9px;color:rgba(255,255,255,0.42);margin-left:auto">Based on conversation</div>
-                    </div>
-                    <div style="padding:10px;display:flex;flex-direction:column;gap:7px">
-                      <div style="background:white;border-radius:5px;padding:8px 10px;border:1px solid #C5E8E6"><div style="font-size:8px;font-weight:700;color:#0A7B74;text-transform:uppercase;letter-spacing:0.08em;margin-bottom:2px">🧪 Suggested Test</div><div style="font-size:11px;color:#0F1923;line-height:1.5">TSH + Free T4 — fatigue, family Hx thyroid, morning headaches</div></div>
-                      <div style="background:white;border-radius:5px;padding:8px 10px;border:1px solid #C5E8E6"><div style="font-size:8px;font-weight:700;color:#0A7B74;text-transform:uppercase;letter-spacing:0.08em;margin-bottom:2px">💊 Drug Note</div><div style="font-size:11px;color:#0F1923;line-height:1.5">Amlodipine fatigue in 3.4% of patients — consider dose review</div></div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="scr-cap"><span><strong>Live Consultation</strong> — real-time transcript with highlighted keywords, patient context, AI suggestions</span><button onclick="go('consult')">Open interactive ↗</button></div>
-    </div>
+  <div class="cs-div"></div>
 
-    <div class="cs-callout">
-      <div class="cs-callout-lbl">The decision behind it</div>
-      <p>We debated adding approve/reject buttons to the AI suggestions. It would have felt more interactive, more "in control." But every button you add is attention you're taking away from the patient in the chair. We left them read-only.</p>
+  <div class="cs-block">
+    <div class="cs-sl">04 — Principles</div>
+    <div class="cs-h2">Three rules I designed against</div>
+    <p class="cs-p">The consultation screen has to stay invisible. The patient app can't read like a medical record. And trust is the feature — a doctor won't sign their name to something they don't believe.</p>
+  </div>
+
+  <div class="cs-div"></div>
+
+  <div class="cs-block">
+    <div class="cs-sl">05 — Process</div>
+    <div class="cs-h2">Most of the work was deciding what to take out</div>
+    <p class="cs-p">The live-consultation screen took the most rounds. The first version put the transcript front and centre, buttons on the AI suggestions, playback controls — comprehensive, and exactly the kind of thing a doctor minimises and never reopens. So we cut: the flag-a-line control, the accept-suggestion button, anything that asked for a tap. Every removal made it better. The rule we landed on — <em>if the doctor has to touch this screen mid-consultation, something has gone wrong.</em></p>
+    <p class="cs-p">Trust took the longest. Doctors reviewing the auto-generated summary would catch a single wrong line and stop believing the whole thing. That's where the confidence scoring, the obvious edit affordances, and the section-by-section review came from — the line between "the app did the work for you" and "you're still in control of the record."</p>
+    <p class="cs-p">The patient app was rewritten line by line with the clinical team, so "your blood pressure is getting better" never drifted away from "I10 — essential hypertension, controlled."</p>
+  </div>
+
+  <div class="cs-div"></div>
+
+  <div class="cs-block">
+    <div class="cs-sl">06 — The solution</div>
+    <div class="cs-h2">Five screens, one source of truth</div>
+    <p class="cs-p">The same record powers everything — captured passively in the room, reviewed by the doctor, then shown two ways: the clinical version for anyone treating the patient, and a plain-language version for the patient themselves. The full set is interactive — open each one from the nav at the top, or jump in here:</p>
+    <div class="cs-screens-links">
+      <button onclick="go('consult')">▸ Live Consultation</button>
+      <button onclick="go('summary')">▸ Visit Summary</button>
+      <button onclick="go('history')">▸ Patient History</button>
+      <button onclick="go('prescription')">▸ Prescription</button>
+      <button onclick="go('patient')">▸ Patient App</button>
     </div>
   </div>
 
   <div class="cs-div"></div>
 
   <div class="cs-block">
-    <div class="cs-sl">Screen 2 — Visit Summary</div>
-    <div class="cs-h2">The doctor reviews it, not rewrites it</div>
-    <p class="cs-p">When the session ends, the app generates a structured clinical record from the transcript. Chief complaint, vitals, diagnoses with ICD-10 codes, prescriptions, tests ordered, follow-up notes. It doesn't look like a transcript dump — it looks like what a doctor would write if they'd had time to write it properly.</p>
-    <p class="cs-p">The review state was the hardest design problem here. Doctors need to trust what they're putting their name on. We couldn't just show the generated summary and assume they'd accept it. So there's a clear "Pending Review" state, obvious edit affordances throughout, and a confidence score from the transcription model — if the system was less sure about something, the doctor can see that and double-check.</p>
-    <p class="cs-p">Once they finalise it, the record becomes visible to the patient in their app and to any other doctor the patient has authorised. That transition — from draft to shared — felt like the right moment to make explicit.</p>
-
-    <div class="scr">
-<div class="scr-ttl">MediScribe — Visit Summary · Auto-generated · 24 Nov 2024</div></div>
-      <div class="scr-pv" style="height:420px">
-        <div class="scr-inner" style="width:1280px;transform:scale(0.555);margin-bottom:-334px">
-          <div style="display:flex;height:754px;background:#F5F8FA;font-family:'Sora',sans-serif">
-            <div style="width:224px;background:#0F1923;flex-shrink:0;padding:18px 0">
-              <div style="padding:8px 18px;font-size:12px;color:rgba(255,255,255,0.45)">🎙 Live Consultation</div>
-              <div style="padding:8px 18px;font-size:12px;color:white;background:rgba(10,123,116,0.2);border-left:2px solid #0D9B92">📄 Visit Summary</div>
-              <div style="padding:8px 18px;font-size:12px;color:rgba(255,255,255,0.45);margin-top:10px">🧑‍⚕️ Patient History</div>
-              <div style="padding:8px 18px;font-size:12px;color:rgba(255,255,255,0.45)">💊 Prescriptions</div>
-            </div>
-            <div style="flex:1;padding:22px 26px;overflow:hidden">
-              <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:14px">
-                <div><div style="font-size:20px;font-weight:700;color:#0F1923;letter-spacing:-0.02em">Visit Summary</div><div style="font-size:11px;color:#7A8D9C;margin-top:2px">Aisha Mehta · Generated from session transcript · 24 Nov 2024</div></div>
-                <div style="display:flex;gap:8px"><div style="background:white;border:1px solid #C8D6DD;border-radius:5px;padding:5px 11px;font-size:11px;color:#0F1923;font-weight:600">✏ Edit</div><div style="background:white;border:1px solid #C8D6DD;border-radius:5px;padding:5px 11px;font-size:11px;color:#0F1923;font-weight:600">📤 Share</div><div style="background:#0A7B74;color:white;border-radius:5px;padding:5px 11px;font-size:11px;font-weight:700">✓ Finalise</div></div>
-              </div>
-              <div style="background:#E8F5EE;border:1px solid rgba(26,122,63,0.2);border-radius:7px;padding:10px 14px;display:flex;align-items:center;gap:10px;margin-bottom:16px">
-                <div style="color:#1A7A3F;font-size:16px">✓</div>
-                <div><div style="font-size:12px;font-weight:600;color:#1A7A3F">Summary auto-generated from transcript</div><div style="font-size:11px;color:#3A4A56;margin-top:1px">Session: 08:43 · Dr. S. Krishnan · Capgemini Health Clinic, Mumbai</div></div>
-              </div>
-              <div style="display:grid;grid-template-columns:1fr 260px;gap:16px">
-                <div>
-                  <div style="background:white;border-radius:10px;border:1px solid #DDE6EA">
-                    <div style="padding:12px 16px;border-bottom:1px solid #DDE6EA;display:flex;justify-content:space-between;align-items:center;background:#F5F8FA">
-                      <div><div style="font-size:13px;font-weight:700;color:#0F1923">Clinical Summary</div><div style="font-size:11px;color:#7A8D9C;margin-top:1px">Auto-generated · review before finalising</div></div>
-                      <span style="background:#FEF6E8;color:#C47A1A;font-size:9px;font-weight:700;padding:2px 7px;border-radius:3px">Pending Review</span>
-                    </div>
-                    <div style="padding:16px">
-                      <div style="font-size:9px;font-weight:700;color:#0F1923;text-transform:uppercase;letter-spacing:0.08em;padding-bottom:8px;border-bottom:1px solid #DDE6EA;margin-bottom:11px">Chief Complaint</div>
-                      <div style="font-size:12px;color:#3A4A56;line-height:1.65;padding:10px 12px;background:#F5F8FA;border-radius:6px;border:1px solid #DDE6EA;margin-bottom:14px">Morning headaches for ~2 weeks, associated nausea. Afternoon fatigue. Review of hypertension management.</div>
-                      <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:14px">
-                        <div style="background:#F5F8FA;border-radius:7px;padding:10px;border:1px solid #DDE6EA"><div style="font-size:9px;color:#7A8D9C;text-transform:uppercase;letter-spacing:.06em;margin-bottom:4px">Blood Pressure</div><div style="font-size:18px;font-weight:700;color:#0F1923;font-family:'JetBrains Mono',monospace">138/88</div><div style="font-size:10px;color:#1A7A3F;margin-top:2px">↓ from 144/92</div></div>
-                        <div style="background:#F5F8FA;border-radius:7px;padding:10px;border:1px solid #DDE6EA"><div style="font-size:9px;color:#7A8D9C;text-transform:uppercase;letter-spacing:.06em;margin-bottom:4px">Heart Rate</div><div style="font-size:18px;font-weight:700;color:#0F1923;font-family:'JetBrains Mono',monospace">74 bpm</div><div style="font-size:10px;color:#7A8D9C;margin-top:2px">Normal range</div></div>
-                        <div style="background:#F5F8FA;border-radius:7px;padding:10px;border:1px solid #DDE6EA"><div style="font-size:9px;color:#7A8D9C;text-transform:uppercase;letter-spacing:.06em;margin-bottom:4px">Weight</div><div style="font-size:18px;font-weight:700;color:#0F1923;font-family:'JetBrains Mono',monospace">64.2 kg</div><div style="font-size:10px;color:#7A8D9C;margin-top:2px">Stable</div></div>
-                      </div>
-                      <div style="font-size:9px;font-weight:700;color:#0F1923;text-transform:uppercase;letter-spacing:0.08em;padding-bottom:8px;border-bottom:1px solid #DDE6EA;margin-bottom:11px">Assessment</div>
-                      <div style="background:#F5F8FA;border-radius:7px;padding:11px 13px;border:1px solid #DDE6EA;margin-bottom:8px"><div style="font-family:'JetBrains Mono',monospace;font-size:10px;color:#0A7B74;margin-bottom:3px">ICD-10: I10</div><div style="font-size:13px;font-weight:600;color:#0F1923;margin-bottom:3px">Essential hypertension — controlled, improving</div><div style="font-size:11px;color:#3A4A56;line-height:1.6">BP improving on current regimen. Morning headaches likely related to overnight BP variation.</div></div>
-                      <div style="background:#F5F8FA;border-radius:7px;padding:11px 13px;border:1px solid #DDE6EA"><div style="font-family:'JetBrains Mono',monospace;font-size:10px;color:#0A7B74;margin-bottom:3px">ICD-10: R53.83</div><div style="font-size:13px;font-weight:600;color:#0F1923;margin-bottom:3px">Fatigue — under investigation</div><div style="font-size:11px;color:#3A4A56;line-height:1.6">Possible Amlodipine SE or early thyroid dysfunction. TSH/Free T4 ordered.</div></div>
-                    </div>
-                  </div>
-                </div>
-                <div style="display:flex;flex-direction:column;gap:12px">
-                  <div style="background:white;border-radius:8px;border:1px solid #DDE6EA;padding:13px"><div style="font-size:12px;font-weight:700;color:#0F1923;margin-bottom:10px">Session Info</div><div style="display:flex;justify-content:space-between;font-size:11px;margin-bottom:6px"><span style="color:#7A8D9C">Duration</span><span style="font-weight:600;color:#0F1923">8 min 43 sec</span></div><div style="display:flex;justify-content:space-between;font-size:11px;margin-bottom:6px"><span style="color:#7A8D9C">Words</span><span style="font-weight:600;color:#0F1923">412</span></div><div style="display:flex;justify-content:space-between;font-size:11px"><span style="color:#7A8D9C">Confidence</span><span style="font-weight:600;color:#1A7A3F">94.2%</span></div></div>
-                  <div style="background:white;border-radius:8px;border:1px solid #DDE6EA;padding:13px"><div style="font-size:12px;font-weight:700;color:#0F1923;margin-bottom:8px">Patient Access</div><div style="font-size:11px;color:#3A4A56;line-height:1.6;margin-bottom:8px">Once finalised, visible to Aisha and any authorised clinician.</div><div style="display:flex;align-items:center;gap:7px;padding:8px;background:#E8F5EE;border-radius:6px;border:1px solid rgba(26,122,63,0.15)"><span>📱</span><div style="font-size:10px;color:#1A7A3F;font-weight:600">Patient notified on app</div></div></div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="scr-cap"><span><strong>Visit Summary</strong> — auto-generated from transcript, structured with ICD codes, editable before finalising</span><button onclick="go('summary')">Open interactive ↗</button></div>
-    </div>
+    <div class="cs-sl">07 — Validation</div>
+    <div class="cs-h2">It went back to the people it was for</div>
+    <p class="cs-p">Doctors tested the prototypes. The sharpest signal was the summary-trust problem — one error collapsing confidence in the whole record — and the review flow exists because of how hard they pushed on it.</p>
   </div>
 
   <div class="cs-div"></div>
 
   <div class="cs-block">
-    <div class="cs-sl">Screen 3 — Patient History</div>
-    <div class="cs-h2">Seven visits across three doctors, all in one place</div>
-    <p class="cs-p">This is the screen that solves the specialist problem. A cardiologist opening this before seeing a patient for the first time can see that they were first diagnosed with hypertension six months ago by their GP, were referred and evaluated, started on Amlodipine, had two follow-ups, and came in today with morning headaches and fatigue. That full story is visible without a phone call to the GP's office and without asking the patient to reconstruct it from memory.</p>
-    <p class="cs-p">The profile card on the left shows the things that need to be seen immediately — blood group, allergies, active conditions, who else is treating this patient. The timeline on the right is ordered by date, with the key clinical tags from each visit visible without opening anything. Overdue follow-ups, critical test results, referral outcomes — all surfaced at the card level.</p>
-    <p class="cs-p">The patient controls who sees this. In the patient app there's a named list of authorised clinicians with a one-tap way to remove access. That felt important to get right — this data is sensitive, and the patient should never be in a position where they can't tell who has access to their full history.</p>
-
-    <div class="scr">
-<div class="scr-ttl">MediScribe — Patient History · Aisha Mehta</div></div>
-      <div class="scr-pv" style="height:400px">
-        <div class="scr-inner" style="width:1280px;transform:scale(0.555);margin-bottom:-318px">
-          <div style="display:flex;height:720px;background:#F5F8FA;font-family:'Sora',sans-serif">
-            <div style="width:224px;background:#0F1923;flex-shrink:0;padding:18px 0">
-              <div style="padding:8px 18px;font-size:12px;color:rgba(255,255,255,0.45)">🎙 Live Consultation</div>
-              <div style="padding:8px 18px;font-size:12px;color:rgba(255,255,255,0.45)">📄 Visit Summary</div>
-              <div style="padding:8px 18px;font-size:12px;color:white;background:rgba(10,123,116,0.2);border-left:2px solid #0D9B92;margin-top:10px">🧑‍⚕️ Patient History</div>
-              <div style="padding:8px 18px;font-size:12px;color:rgba(255,255,255,0.45)">💊 Prescriptions</div>
-            </div>
-            <div style="flex:1;padding:22px 26px;overflow:hidden">
-              <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:16px">
-                <div><div style="font-size:20px;font-weight:700;color:#0F1923;letter-spacing:-0.02em">Patient History</div><div style="font-size:11px;color:#7A8D9C;margin-top:2px">Aisha Mehta · MRN: 00-4471-MH · All treating clinicians</div></div>
-                <div style="background:#0A7B74;color:white;border-radius:5px;padding:5px 11px;font-size:11px;font-weight:700">🎙 Start Consultation</div>
-              </div>
-              <div style="display:grid;grid-template-columns:260px 1fr;gap:16px">
-                <!-- Profile -->
-                <div style="background:#0F1923;border-radius:10px;padding:18px;color:white">
-                  <div style="width:48px;height:48px;border-radius:50%;background:#0A7B74;display:flex;align-items:center;justify-content:center;font-size:17px;font-weight:700;color:white;margin-bottom:12px">AM</div>
-                  <div style="font-size:14px;font-weight:700;color:white;margin-bottom:3px;letter-spacing:-0.02em">Aisha Mehta</div>
-                  <div style="font-size:9px;font-family:'JetBrains Mono',monospace;color:rgba(255,255,255,0.32);margin-bottom:10px">MRN: 00-4471-MH</div>
-                  <div style="display:flex;flex-direction:column;gap:5px;margin-bottom:10px">
-                    <div style="display:flex;justify-content:space-between;font-size:10px"><span style="color:rgba(255,255,255,0.35)">DOB</span><span style="color:rgba(255,255,255,0.78)">14 Mar 1988</span></div>
-                    <div style="display:flex;justify-content:space-between;font-size:10px"><span style="color:rgba(255,255,255,0.35)">Gender</span><span style="color:rgba(255,255,255,0.78)">Female</span></div>
-                    <div style="display:flex;justify-content:space-between;font-size:10px"><span style="color:rgba(255,255,255,0.35)">Blood Group</span><span style="color:rgba(255,255,255,0.78)">B+</span></div>
-                  </div>
-                  <div style="height:1px;background:rgba(255,255,255,0.1);margin:10px 0"></div>
-                  <div style="font-size:9px;font-weight:700;color:rgba(255,255,255,0.28);text-transform:uppercase;letter-spacing:0.1em;margin-bottom:7px">Conditions</div>
-                  <div style="display:flex;flex-direction:column;gap:5px">
-                    <div style="font-size:10px;padding:4px 8px;background:rgba(255,255,255,0.08);border-radius:4px;color:rgba(255,255,255,0.68);display:flex;align-items:center;gap:6px"><div style="width:5px;height:5px;border-radius:50%;background:#F5A623;flex-shrink:0"></div>Hypertension (primary)</div>
-                    <div style="font-size:10px;padding:4px 8px;background:rgba(255,255,255,0.08);border-radius:4px;color:rgba(255,255,255,0.68);display:flex;align-items:center;gap:6px"><div style="width:5px;height:5px;border-radius:50%;background:#E53E3E;flex-shrink:0"></div>Allergy: Penicillin (severe)</div>
-                    <div style="font-size:10px;padding:4px 8px;background:rgba(255,255,255,0.08);border-radius:4px;color:rgba(255,255,255,0.68);display:flex;align-items:center;gap:6px"><div style="width:5px;height:5px;border-radius:50%;background:rgba(255,255,255,0.3);flex-shrink:0"></div>Family Hx: Thyroid</div>
-                  </div>
-                  <div style="height:1px;background:rgba(255,255,255,0.1);margin:10px 0"></div>
-                  <div style="font-size:9px;font-weight:700;color:rgba(255,255,255,0.28);text-transform:uppercase;letter-spacing:0.1em;margin-bottom:7px">Treating Clinicians</div>
-                  <div style="font-size:10px;color:rgba(255,255,255,0.65);display:flex;align-items:center;gap:6px;margin-bottom:5px"><div style="width:18px;height:18px;border-radius:50%;background:#0A7B74;display:flex;align-items:center;justify-content:center;font-size:7px;font-weight:700">SK</div>Dr. S. Krishnan (GP)</div>
-                  <div style="font-size:10px;color:rgba(255,255,255,0.65);display:flex;align-items:center;gap:6px"><div style="width:18px;height:18px;border-radius:50%;background:#1F5FA6;display:flex;align-items:center;justify-content:center;font-size:7px;font-weight:700">RG</div>Dr. R. Gupta (Cardio)</div>
-                </div>
-                <!-- Timeline -->
-                <div>
-                  <div style="font-size:12px;font-weight:700;color:#0F1923;margin-bottom:13px">Visit History — 7 visits across 3 clinicians</div>
-                  <div style="display:flex;flex-direction:column;gap:0">
-                    <div style="display:grid;grid-template-columns:46px 1fr;gap:14px;margin-bottom:0">
-                      <div style="display:flex;flex-direction:column;align-items:center"><div style="background:#E6F4F3;border:1px solid #C5E8E6;border-radius:6px;padding:5px 7px;text-align:center;width:40px"><div style="font-size:13px;font-weight:700;color:#065954">24</div><div style="font-size:8px;font-weight:600;color:#0A7B74;text-transform:uppercase">Nov</div></div><div style="width:2px;flex:1;min-height:12px;background:#DDE6EA;margin:2px auto"></div></div>
-                      <div style="background:white;border-radius:8px;border:2px solid #0A7B74;padding:12px 14px;margin-bottom:12px;box-shadow:0 2px 10px rgba(10,123,116,0.1)">
-                        <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:6px"><div><div style="font-size:11px;font-weight:600;color:#0F1923">Dr. S. Krishnan</div><div style="font-size:10px;color:#7A8D9C;margin-top:1px">Capgemini Health Clinic, Mumbai</div></div><span style="background:#E6F4F3;color:#0A7B74;font-size:9px;font-weight:700;padding:2px 6px;border-radius:3px">Today</span></div>
-                        <div style="font-size:12px;color:#3A4A56;margin-bottom:7px">Morning headaches, fatigue, hypertension review</div>
-                        <div style="display:flex;gap:5px;flex-wrap:wrap;margin-bottom:7px"><span style="font-size:9px;padding:2px 7px;border-radius:10px;border:1px solid #DDE6EA;color:#3A4A56">BP: 138/88</span><span style="font-size:9px;padding:2px 7px;border-radius:10px;border:1px solid #DDE6EA;color:#3A4A56">Amlodipine ↑ 10mg</span><span style="font-size:9px;padding:2px 7px;border-radius:10px;border:1px solid #DDE6EA;color:#3A4A56">TSH ordered</span></div>
-                        <div style="display:flex;justify-content:space-between;font-size:10px;color:#7A8D9C;padding-top:7px;border-top:1px solid #DDE6EA"><span>8m 43s · Transcript available</span><span style="color:#0A7B74">View Summary →</span></div>
-                      </div>
-                    </div>
-                    <div style="display:grid;grid-template-columns:46px 1fr;gap:14px">
-                      <div style="display:flex;flex-direction:column;align-items:center"><div style="background:#E6F4F3;border:1px solid #C5E8E6;border-radius:6px;padding:5px 7px;text-align:center;width:40px"><div style="font-size:13px;font-weight:700;color:#065954">03</div><div style="font-size:8px;font-weight:600;color:#0A7B74;text-transform:uppercase">Sep</div></div><div style="width:2px;flex:1;min-height:12px;background:#DDE6EA;margin:2px auto"></div></div>
-                      <div style="background:white;border-radius:8px;border:1px solid #DDE6EA;padding:12px 14px;margin-bottom:12px">
-                        <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:6px"><div><div style="font-size:11px;font-weight:600;color:#0F1923">Dr. S. Krishnan</div><div style="font-size:10px;color:#7A8D9C;margin-top:1px">Capgemini Health Clinic, Mumbai</div></div><span style="background:#E8F5EE;color:#1A7A3F;font-size:9px;font-weight:700;padding:2px 6px;border-radius:3px">Finalised</span></div>
-                        <div style="font-size:12px;color:#3A4A56;margin-bottom:7px">Hypertension follow-up — 3 month review</div>
-                        <div style="display:flex;gap:5px;flex-wrap:wrap;margin-bottom:7px"><span style="font-size:9px;padding:2px 7px;border-radius:10px;border:1px solid #DDE6EA;color:#3A4A56">BP: 144/92</span><span style="font-size:9px;padding:2px 7px;border-radius:10px;border:1px solid #DDE6EA;color:#3A4A56">Amlodipine continued</span></div>
-                        <div style="display:flex;justify-content:space-between;font-size:10px;color:#7A8D9C;padding-top:7px;border-top:1px solid #DDE6EA"><span>11m · Transcript available</span><span style="color:#0A7B74">View →</span></div>
-                      </div>
-                    </div>
-                    <div style="display:grid;grid-template-columns:46px 1fr;gap:14px">
-                      <div style="display:flex;flex-direction:column;align-items:center"><div style="background:#E6F4F3;border:1px solid #C5E8E6;border-radius:6px;padding:5px 7px;text-align:center;width:40px"><div style="font-size:13px;font-weight:700;color:#065954">18</div><div style="font-size:8px;font-weight:600;color:#0A7B74;text-transform:uppercase">Jul</div></div></div>
-                      <div style="background:white;border-radius:8px;border:1px solid #DDE6EA;padding:12px 14px;margin-bottom:12px">
-                        <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:6px"><div><div style="font-size:11px;font-weight:600;color:#0F1923">Dr. R. Gupta</div><div style="font-size:10px;color:#7A8D9C;margin-top:1px">Apollo Hospital, Cardiology</div></div><span style="background:#E8F5EE;color:#1A7A3F;font-size:9px;font-weight:700;padding:2px 6px;border-radius:3px">Finalised</span></div>
-                        <div style="font-size:12px;color:#3A4A56;margin-bottom:7px">Cardiology referral — hypertension evaluation</div>
-                        <div style="display:flex;gap:5px;flex-wrap:wrap;margin-bottom:7px"><span style="font-size:9px;padding:2px 7px;border-radius:10px;border:1px solid #DDE6EA;color:#3A4A56">Echo: Normal</span><span style="font-size:9px;padding:2px 7px;border-radius:10px;border:1px solid #DDE6EA;color:#3A4A56">Started Amlodipine</span></div>
-                        <div style="display:flex;justify-content:space-between;font-size:10px;color:#7A8D9C;padding-top:7px;border-top:1px solid #DDE6EA"><span>22m · Transcript available</span><span style="color:#0A7B74">View →</span></div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="scr-cap"><span><strong>Patient History</strong> — complete visit timeline across all treating clinicians, with critical context in sidebar</span><button onclick="go('history')">Open interactive ↗</button></div>
-    </div>
-  </div>
-
-  <div class="cs-div"></div>
-
-  <div class="cs-block">
-    <div class="cs-sl">Screen 4 — Prescription</div>
-    <div class="cs-h2">Generated from the conversation, verified by the doctor</div>
-    <p class="cs-p">When the doctor mentions a medication during the consultation — "let's increase your Amlodipine to 10mg" — the app picks that up from the transcript and populates the prescription automatically. Dose, route, frequency, duration. The doctor reviews and signs off.</p>
-    <p class="cs-p">Each drug card has the clinical detail at the top and plain-language patient instructions below — "take one tablet every morning, avoid grapefruit juice" rather than just the dosing notation. The allergy flag sits at the top of the prescription so it's visible to the pharmacist or any other clinician who opens the record.</p>
-    <p class="cs-p">The prescription goes to the patient as a QR code in their app. They can walk into any registered pharmacy and show that screen. No printed paper, no chance of losing it on the way home.</p>
-
-    <div class="scr">
-<div class="scr-ttl">MediScribe — Prescription · RX-2024-11-4471</div></div>
-      <div class="scr-pv" style="height:380px">
-        <div class="scr-inner" style="width:1280px;transform:scale(0.555);margin-bottom:-298px">
-          <div style="display:flex;height:538px;background:#F5F8FA;font-family:'Sora',sans-serif">
-            <div style="width:224px;background:#0F1923;flex-shrink:0;padding:18px 0">
-              <div style="padding:8px 18px;font-size:12px;color:rgba(255,255,255,0.45)">🎙 Live Consultation</div>
-              <div style="padding:8px 18px;font-size:12px;color:rgba(255,255,255,0.45)">📄 Visit Summary</div>
-              <div style="padding:8px 18px;font-size:12px;color:rgba(255,255,255,0.45);margin-top:10px">🧑‍⚕️ Patient History</div>
-              <div style="padding:8px 18px;font-size:12px;color:white;background:rgba(10,123,116,0.2);border-left:2px solid #0D9B92">💊 Prescriptions</div>
-            </div>
-            <div style="flex:1;padding:22px 26px;overflow:hidden">
-              <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:16px">
-                <div><div style="font-size:20px;font-weight:700;color:#0F1923;letter-spacing:-0.02em">Prescription</div><div style="font-size:11px;color:#7A8D9C;margin-top:2px">Aisha Mehta · 24 November 2024 · RX-2024-11-4471</div></div>
-                <div style="display:flex;gap:8px"><div style="background:#0A7B74;color:white;border-radius:5px;padding:5px 11px;font-size:11px;font-weight:700">📤 Send to Patient</div></div>
-              </div>
-              <!-- Rx header -->
-              <div style="background:white;border-radius:10px;border:1px solid #DDE6EA;padding:16px 18px;margin-bottom:14px;display:flex;justify-content:space-between;align-items:flex-start">
-                <div style="display:flex;gap:12px;align-items:flex-start"><div style="width:36px;height:36px;background:#E6F4F3;border-radius:7px;display:flex;align-items:center;justify-content:center;font-size:16px">🩺</div><div><div style="font-size:9px;color:#7A8D9C;text-transform:uppercase;letter-spacing:0.07em;margin-bottom:2px">Prescribing Physician</div><div style="font-size:14px;font-weight:700;color:#0F1923">Dr. Suresh Krishnan</div><div style="font-size:11px;color:#7A8D9C">MBBS, MD · Reg. No. MCI-044782</div></div></div>
-                <div style="text-align:right"><div style="font-family:'JetBrains Mono',monospace;font-size:11px;color:#0A7B74;margin-bottom:4px">RX-2024-11-4471</div><div style="font-size:11px;color:#7A8D9C">24 November 2024</div><div style="background:#E8F5EE;color:#1A7A3F;font-size:10px;font-weight:600;padding:2px 7px;border-radius:3px;margin-top:4px;display:inline-block">✓ Valid 30 days</div></div>
-              </div>
-              <!-- Patient strip -->
-              <div style="background:#F5F8FA;border:1px solid #DDE6EA;border-radius:8px;padding:11px 16px;margin-bottom:14px;display:flex;justify-content:space-between;align-items:center">
-                <div style="display:flex;gap:24px"><div><div style="font-size:9px;color:#7A8D9C;text-transform:uppercase;letter-spacing:.06em;margin-bottom:2px">Patient</div><div style="font-size:12px;font-weight:600;color:#0F1923">Aisha Mehta</div></div><div><div style="font-size:9px;color:#7A8D9C;text-transform:uppercase;letter-spacing:.06em;margin-bottom:2px">Age</div><div style="font-size:12px;font-weight:600;color:#0F1923">36F</div></div><div><div style="font-size:9px;color:#7A8D9C;text-transform:uppercase;letter-spacing:.06em;margin-bottom:2px">MRN</div><div style="font-size:12px;font-weight:600;color:#0F1923;font-family:'JetBrains Mono',monospace;font-size:11px">00-4471-MH</div></div></div>
-                <div style="padding:6px 10px;background:#FDF2F2;border-radius:6px;border:1px solid rgba(214,69,69,0.2);font-size:10px;color:#D64545;font-weight:600">⚠ Penicillin allergy</div>
-              </div>
-              <!-- Drugs -->
-              <div style="background:white;border-radius:8px;border:1px solid #DDE6EA;overflow:hidden;margin-bottom:10px">
-                <div style="padding:11px 15px;background:#F5F8FA;border-bottom:1px solid #DDE6EA;display:flex;justify-content:space-between;align-items:center"><div><div style="font-size:13px;font-weight:700;color:#0F1923">Amlodipine Besylate</div><div style="font-size:11px;color:#7A8D9C;margin-top:1px">Norvasc® · Calcium channel blocker</div></div><div style="font-family:'JetBrains Mono',monospace;font-size:11px;color:#065954;background:#E6F4F3;padding:2px 8px;border-radius:3px">10mg</div></div>
-                <div style="padding:13px 15px;display:grid;grid-template-columns:repeat(4,1fr);gap:12px;border-bottom:1px solid #DDE6EA">
-                  <div><div style="font-size:9px;color:#7A8D9C;text-transform:uppercase;margin-bottom:3px">Dose</div><div style="font-size:12px;font-weight:600;color:#0F1923">10 mg</div></div>
-                  <div><div style="font-size:9px;color:#7A8D9C;text-transform:uppercase;margin-bottom:3px">Route</div><div style="font-size:12px;font-weight:600;color:#0F1923">Oral</div></div>
-                  <div><div style="font-size:9px;color:#7A8D9C;text-transform:uppercase;margin-bottom:3px">Frequency</div><div style="font-size:12px;font-weight:600;color:#0F1923">Once daily</div></div>
-                  <div><div style="font-size:9px;color:#7A8D9C;text-transform:uppercase;margin-bottom:3px">Duration</div><div style="font-size:12px;font-weight:600;color:#0F1923">30 days</div></div>
-                </div>
-                <div style="padding:11px 15px"><div style="font-size:9px;font-weight:600;color:#7A8D9C;text-transform:uppercase;letter-spacing:.06em;margin-bottom:5px">Patient Instructions</div><div style="font-size:11px;color:#3A4A56;line-height:1.65;background:#F5F8FA;border-radius:5px;padding:9px 11px;border:1px solid #DDE6EA">Take one tablet every morning at the same time. Can be taken with or without food. Do not stop without consulting your doctor. Avoid grapefruit juice.</div></div>
-                <div style="padding:0 15px 11px;display:flex;gap:7px"><span style="background:#FEF6E8;color:#C47A1A;font-size:9px;font-weight:700;padding:2px 7px;border-radius:3px">Dose increased from 5mg</span><span style="background:#F5F8FA;color:#7A8D9C;font-size:9px;font-weight:600;padding:2px 7px;border-radius:3px">Refills: 2</span></div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="scr-cap"><span><strong>Prescription</strong> — auto-populated from transcript, drug interaction check, patient instructions in plain language</span><button onclick="go('prescription')">Open interactive ↗</button></div>
-    </div>
-  </div>
-
-  <div class="cs-div"></div>
-
-  <div class="cs-block">
-    <div class="cs-sl">Screen 5 — Patient App</div>
-    <div class="cs-h2">The same appointment, written for someone who isn't a doctor</div>
-    <p class="cs-p">This was genuinely the most interesting part of the project. The patient app uses the same underlying data as the clinical record, but it can't look or read anything like it.</p>
-    <p class="cs-p">Where the clinical record says "ICD-10: I10 — Essential hypertension, controlled, improving," the patient app says "your blood pressure is getting better." Where the clinical note says "Amlodipine dose titrated from 5mg to 10mg OD," the patient app says "your blood pressure tablet has been adjusted to a higher dose — take one every morning." That translation work — every term, every phrase — was done in collaboration with the clinical team to make sure simpler didn't mean inaccurate.</p>
-    <p class="cs-p">Medication reminders get created automatically from the prescription. The patient doesn't configure anything. They open the app the next morning and the reminder is already there at 8am. Lab results come through as a notification when they're ready, with a plain explanation of what to expect at the next appointment.</p>
-    <p class="cs-p">The nine screens below show the full patient journey: the home screen, visit summary in plain language, medication detail, health history, prescription with QR code, lab results with plain explanations, notifications, the doctor access consent screen, and the patient profile. Each screen is navigable from the tab row above the phone.</p>
-
-    <div class="scr">
-<div class="scr-ttl">MediScribe Patient App — Aisha Mehta</div></div>
-      <div class="scr-pv" style="height:400px;display:flex;align-items:center;justify-content:center;padding:20px">
-        <div style="transform:scale(0.75);transform-origin:top center;display:flex;justify-content:center">
-          <div style="width:375px;background:#0F1923;border-radius:44px;padding:10px;box-shadow:0 20px 50px rgba(0,0,0,0.3)">
-            <div style="height:32px;background:#0F1923;border-radius:18px 18px 0 0;display:flex;align-items:center;justify-content:center"><div style="width:9px;height:9px;border-radius:50%;background:rgba(255,255,255,0.1)"></div></div>
-            <div style="background:#F5F8FA;border-radius:32px;overflow:hidden;height:580px;display:flex;flex-direction:column">
-              <div style="height:36px;background:#0F1923;display:flex;align-items:center;justify-content:space-between;padding:0 18px"><span style="font-size:13px;font-weight:700;color:white;font-family:'JetBrains Mono',monospace">9:41</span><div style="display:flex;gap:5px;font-size:11px;color:rgba(255,255,255,0.7)"><span>📶</span><span>🔋</span></div></div>
-              <div style="flex:1;overflow:hidden">
-                <div style="background:linear-gradient(180deg,#065954,#0A7B74);padding:18px 16px 22px">
-                  <div style="font-size:11px;color:rgba(255,255,255,0.5);margin-bottom:3px">Good morning,</div>
-                  <div style="font-size:17px;font-weight:700;color:white;margin-bottom:11px;letter-spacing:-0.02em">Aisha Mehta</div>
-                  <div style="display:flex;gap:10px">
-                    <div style="background:rgba(255,255,255,0.12);border-radius:7px;padding:9px 11px;flex:1"><div style="font-size:14px;font-weight:700;color:white">7</div><div style="font-size:8px;color:rgba(255,255,255,0.45);text-transform:uppercase;letter-spacing:.07em;margin-top:2px">Visits</div></div>
-                    <div style="background:rgba(255,255,255,0.12);border-radius:7px;padding:9px 11px;flex:1"><div style="font-size:14px;font-weight:700;color:white">2</div><div style="font-size:8px;color:rgba(255,255,255,0.45);text-transform:uppercase;letter-spacing:.07em;margin-top:2px">Meds</div></div>
-                    <div style="background:rgba(255,255,255,0.12);border-radius:7px;padding:9px 11px;flex:1"><div style="font-size:14px;font-weight:700;color:white">2</div><div style="font-size:8px;color:rgba(255,255,255,0.45);text-transform:uppercase;letter-spacing:.07em;margin-top:2px">Labs</div></div>
-                  </div>
-                </div>
-                <div style="padding:14px">
-                  <div style="background:#FEF6E8;border-radius:9px;padding:11px;border:1px solid rgba(196,122,26,0.2);display:flex;gap:9px;margin-bottom:12px;align-items:flex-start"><span style="font-size:17px">🧪</span><div><div style="font-size:11px;font-weight:600;color:#C47A1A;margin-bottom:2px">Lab tests ordered</div><div style="font-size:10px;color:#3A4A56;line-height:1.5">TSH + Free T4 and FBC from today's visit. Results expected in 2–3 days.</div></div></div>
-                  <div style="font-size:10px;font-weight:700;color:#0F1923;text-transform:uppercase;letter-spacing:.08em;margin-bottom:9px">Recent Visit</div>
-                  <div style="background:white;border-radius:9px;border:1px solid #DDE6EA;padding:12px;margin-bottom:12px">
-                    <div style="font-size:10px;color:#7A8D9C;margin-bottom:4px">Today · 24 November 2024</div>
-                    <div style="font-size:12px;font-weight:600;color:#0F1923;margin-bottom:2px">Dr. S. Krishnan</div>
-                    <div style="font-size:11px;color:#3A4A56;margin-bottom:9px">Blood pressure improving. Medication adjusted. Tests ordered.</div>
-                    <div style="display:flex;gap:5px;flex-wrap:wrap"><span style="font-size:9px;padding:2px 7px;border-radius:10px;background:#E6F4F3;color:#065954;font-weight:500">BP: 138/88</span><span style="font-size:9px;padding:2px 7px;border-radius:10px;background:#E6F4F3;color:#065954;font-weight:500">Improving ↓</span></div>
-                  </div>
-                  <div style="font-size:10px;font-weight:700;color:#0F1923;text-transform:uppercase;letter-spacing:.08em;margin-bottom:9px">Today's Medications</div>
-                  <div style="background:white;border-radius:9px;border:1px solid #DDE6EA;padding:10px 12px;margin-bottom:8px;display:flex;align-items:center;gap:10px"><div style="width:30px;height:30px;border-radius:7px;background:#E6F4F3;display:flex;align-items:center;justify-content:center;font-size:13px;flex-shrink:0">💊</div><div style="flex:1"><div style="font-size:11px;font-weight:600;color:#0F1923">Amlodipine 10mg</div><div style="font-size:10px;color:#7A8D9C;margin-top:1px">1 tablet · Morning</div></div><div style="background:#E6F4F3;color:#065954;font-size:9px;font-weight:600;padding:2px 7px;border-radius:3px">8:00 AM</div></div>
-                  <div style="background:white;border-radius:9px;border:1px solid #DDE6EA;padding:10px 12px;display:flex;align-items:center;gap:10px"><div style="width:30px;height:30px;border-radius:7px;background:#F5F8FA;display:flex;align-items:center;justify-content:center;font-size:13px;flex-shrink:0">🌞</div><div style="flex:1"><div style="font-size:11px;font-weight:600;color:#0F1923">Vitamin D3 1000 IU</div><div style="font-size:10px;color:#7A8D9C;margin-top:1px">1 capsule · With meal</div></div><div style="background:#F5F8FA;color:#7A8D9C;font-size:9px;font-weight:600;padding:2px 7px;border-radius:3px">Taken ✓</div></div>
-                </div>
-              </div>
-              <div style="background:white;border-top:1px solid #DDE6EA;padding:7px 0;display:flex">
-                <div style="flex:1;display:flex;flex-direction:column;align-items:center;gap:2px;padding:5px 0"><span style="font-size:15px">🏠</span><span style="font-size:8px;color:#0A7B74;font-weight:600">Home</span></div>
-                <div style="flex:1;display:flex;flex-direction:column;align-items:center;gap:2px;padding:5px 0"><span style="font-size:15px">📋</span><span style="font-size:8px;color:#7A8D9C">History</span></div>
-                <div style="flex:1;display:flex;flex-direction:column;align-items:center;gap:2px;padding:5px 0"><span style="font-size:15px">💊</span><span style="font-size:8px;color:#7A8D9C">Meds</span></div>
-                <div style="flex:1;display:flex;flex-direction:column;align-items:center;gap:2px;padding:5px 0"><span style="font-size:15px">🧪</span><span style="font-size:8px;color:#7A8D9C">Labs</span></div>
-                <div style="flex:1;display:flex;flex-direction:column;align-items:center;gap:2px;padding:5px 0"><span style="font-size:15px">👤</span><span style="font-size:8px;color:#7A8D9C">Profile</span></div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="scr-cap"><span><strong>Patient App</strong> — plain-language visit summary, medication reminders, lab results, appointment tracking</span><button onclick="go('patient')">Open interactive ↗</button></div>
-    </div>
-
-    <div class="cs-quote">
-      <p>The patient app isn't a simplified version of the clinical record. It's a completely different document that happens to come from the same source.</p>
-    </div>
-  </div>
-
-  <div class="cs-div"></div>
-
-  <div class="cs-block">
-    <div class="cs-sl">What was genuinely hard</div>
-    <div class="cs-h2">Three things that took longer than expected</div>
-    <p class="cs-p">Getting the consultation screen passive enough was harder than it sounds. Every time we added something useful — a way to flag a transcript line, a button to accept an AI suggestion — it pulled focus. There were several rounds where we'd add a feature, look at it, and delete it. The restraint felt counterintuitive at first. Usually when you're designing something you're trying to add value. Here, removing things was the value.</p>
-    <p class="cs-p">Making the auto-generated summary trustworthy was a slow process. Early on, doctors reviewing the prototype would spot one small error in the generated record and lose confidence in the whole thing. We added confidence scoring, clearer editing affordances, and a section-by-section review flow. It took a few rounds to find the right balance between "the app has done the work for you" and "you're still in control of what goes in the record."</p>
-    <p class="cs-p">The consent flow — who sees what, and how patients control it — got squeezed at the end of the project timeline. It was designed, but it didn't get the same iteration time as the other screens. In hindsight that was the wrong call. In healthcare, consent isn't a secondary feature. If I were doing this again I'd start there, not finish there.</p>
-  </div>
-
-  <div class="cs-div"></div>
-
-  <div class="cs-block">
-    <div class="cs-sl">Looking back</div>
-    <div class="cs-h2">What I'd do differently, and the part I'm glad we got right</div>
-    <p class="cs-p">The thing I'd keep: the decision to make the consultation screen almost entirely passive. There were multiple conversations where someone wanted to add interactivity to it — approve a suggestion, edit a transcript line mid-session. Every time, we pushed back. The consultation is between the doctor and the patient. The app is there to record it, not participate in it. That principle made the screen what it needed to be.</p>
-    <p class="cs-p">What I'd change: the patient notification strategy. The medication reminders worked well, but the rest of the app was still fairly passive — you open it to look things up. A more useful version would help patients arrive at their next appointment better prepared. What's changed since last time. What the doctor asked you to keep track of. What questions to bring up. That kind of active preparation would make the app useful between visits, not just after them.</p>
-    <p class="cs-p">I also didn't set up proper success metrics going in. The feedback from clinical staff was positive, but "positive feedback" isn't a measurement. I should have agreed on what good looked like before the prototype was built — something like: how long does it take the doctor to finalise a record? How many corrections do they make to the generated summary? How many patients open the app within 24 hours of their appointment? Those numbers would tell you whether the design was actually working.</p>
+    <div class="cs-sl">08 — Reflection</div>
+    <div class="cs-h2">What I'd keep, and what I'd change</div>
+    <p class="cs-p"><strong>Keep:</strong> the passive consultation screen. Every push to make it interactive got resisted, and that restraint is what made it work — the consultation is between the doctor and the patient, and the app's job is to record it, not join in.</p>
+    <p class="cs-p"><strong>Change:</strong> consent got squeezed to the end of the timeline. In healthcare that belongs at the start, not as a finishing touch — if I did this again I'd design the "who sees what" flow first.</p>
+    <p class="cs-p">And I didn't set success metrics going in. "Positive feedback" isn't a measurement. Next time I'd agree on what good looks like before building — time to finalise a record, corrections per generated summary, patients opening the app within 24 hours of a visit.</p>
 
     <div class="cs-insights">
       <div class="cs-insight">
-        <h4>Designing for two users means accepting that they want opposite things.</h4>
-        <p>The doctor wants less to look at. The patient wants more explanation. Same data, completely different jobs. The mistake would have been trying to reconcile them into one interface.</p>
+        <h4>Designing for two users means accepting they want opposite things.</h4>
+        <p>The doctor wants less to look at; the patient wants more explained. Same data, opposite jobs. The trap would have been forcing them into one interface.</p>
       </div>
       <div class="cs-insight">
-        <h4>In healthcare, the tool has to earn trust before it can help.</h4>
-        <p>One wrong diagnosis code in the generated summary and a doctor stops trusting the whole system. The confidence scoring, the review state, the editing — those weren't nice-to-haves. They were the precondition for the tool being used at all.</p>
+        <h4>In healthcare, a tool earns trust before it gets to help.</h4>
+        <p>One wrong code in a generated summary and a doctor is done with the whole system. Confidence scoring and the review state weren't polish — they were the price of being used at all.</p>
       </div>
       <div class="cs-insight">
-        <h4>Simpler language takes more work, not less.</h4>
-        <p>"Hypertension — controlled" is four words. Writing "your blood pressure is in a better range now, which is good news for your heart over time" is harder, takes longer, and requires someone who understands both the medicine and the patient.</p>
+        <h4>Plain language is more work, not less.</h4>
+        <p>"Hypertension, controlled" is two words. Saying it so a patient actually understands takes someone who knows both the medicine and the person reading it.</p>
       </div>
       <div class="cs-insight">
-        <h4>A screen that asks for nothing is still doing something.</h4>
-        <p>The consultation interface required zero interaction during the session. That felt like a design failure at first — shouldn't a well-designed tool be useful to use? The answer here was no. Being present without demanding attention was the whole point.</p>
+        <h4>A screen that asks for nothing is still doing its job.</h4>
+        <p>The consultation interface needed zero interaction during the session. Being present without demanding attention was the entire point.</p>
       </div>
     </div>
   </div>
