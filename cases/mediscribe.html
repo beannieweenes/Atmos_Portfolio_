@@ -1950,15 +1950,17 @@ function showPhone(idx) {
 // A stray </div> inside one of the embedded mockups closes #sc-casestudy/.cs-page
 // early, so the later writeup blocks escape into .page-wrap — rendering full-width
 // AND showing on every tab. Re-attach those blocks back into the writeup column.
-(function reattachWriteup(){
+(function fixStructure(){
+  const pw = document.querySelector('.page-wrap');
+  if (!pw) return;
+  // An unclosed tag in one of the app mockups nests later screens inside earlier
+  // ones, so the tab switcher hides them. Lift every screen back to page-wrap level.
+  document.querySelectorAll('.screen').forEach(s => { if (s.parentElement !== pw) pw.appendChild(s); });
+  // And move any writeup block that escaped its column back into .cs-page.
   const screen = document.getElementById('sc-casestudy');
   const page = screen && screen.querySelector('.cs-page');
-  if (!page) return;
-  // Any writeup block that ended up outside the screen (in document order) gets
-  // moved back into .cs-page — restoring tab-gating and the readable column.
-  document.querySelectorAll('.cs-cover, .cs-block, .cs-div, .scr-pv, .scr-cap').forEach(el => {
-    if (!screen.contains(el)) page.appendChild(el);
-  });
+  if (page) document.querySelectorAll('.cs-cover, .cs-block, .cs-div, .scr-pv, .scr-cap')
+    .forEach(el => { if (!screen.contains(el)) page.appendChild(el); });
 })();
 
 function go(name) {
